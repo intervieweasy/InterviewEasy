@@ -1,5 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, BookOpen, Code2, Play, Search, Sparkles } from "lucide-react";
+import {
+  ArrowRight,
+  BookOpen,
+  BrainCircuit,
+  Braces,
+  Cloud,
+  Code2,
+  CreditCard,
+  Database,
+  Layers3,
+  Play,
+  Search,
+  Sparkles,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
@@ -10,7 +23,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Prepare for developer interviews with searchable questions, clear explanations, video walkthroughs, code examples, and practice prompts.",
+          "Prepare for .NET, JavaScript, database, Azure, AI, and integration interviews with searchable questions, explanations, videos, examples, and practice prompts.",
       },
       {
         property: "og:title",
@@ -19,7 +32,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "Search developer interview topics, learn each answer with text and video, then practice with examples.",
+          "Search .NET, JavaScript, database, Azure, AI, and integration interview topics, then learn each answer with text, video, and examples.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -30,28 +43,124 @@ export const Route = createFileRoute("/")({
 
 const topics = [
   {
-    icon: "🧠",
-    title: "Data Structures",
-    description: "Arrays, trees, graphs and hashing",
-    count: "2,140 questions",
+    icon: "#",
+    title: ".NET Stack",
+    description: "C#, ASP.NET, Core, APIs and desktop apps",
+    count: "14 topic areas",
   },
   {
-    icon: "⚙️",
-    title: "System Design",
-    description: "Scaling, caching and consistency",
-    count: "860 questions",
+    icon: "JS",
+    title: "JavaScript Stack",
+    description: "JavaScript, Angular, React, TypeScript and Node.js",
+    count: "9 topic areas",
   },
   {
-    icon: "🔌",
-    title: "Backend & APIs",
-    description: "REST, auth, queues and databases",
-    count: "1,320 questions",
+    icon: "DB",
+    title: "Databases",
+    description: "SQL Server, MongoDB, RavenDB and PostgreSQL",
+    count: "6 topic areas",
   },
   {
-    icon: "🎨",
-    title: "Frontend",
-    description: "React, CSS and performance",
-    count: "1,780 questions",
+    icon: "AI",
+    title: "AI & Integrations",
+    description: "AI, payments, SAP, Salesforce and messaging",
+    count: "12 topic areas",
+  },
+];
+
+const menuGroups = [
+  {
+    title: ".NET Menu",
+    description: "Microsoft developer interview questions and examples.",
+    Icon: Layers3,
+    tone: "bg-brand-soft text-brand",
+    items: [
+      "C#",
+      "ASP.NET",
+      "ASP.NET MVC",
+      "ASP.NET Web API",
+      "ASP.NET Core",
+      "ASP.NET Core Web API",
+      "ADO.NET",
+      "Entity Framework",
+      "LINQ",
+      "NHibernate",
+      "Fluent NHibernate",
+      "Windows Forms",
+      "WPF (ERP)",
+      "Web Services, WCF, etc.",
+    ],
+  },
+  {
+    title: "JavaScript Menu",
+    description: "Frontend and runtime topics for modern web roles.",
+    Icon: Braces,
+    tone: "bg-ai-accent-soft text-ai-accent",
+    items: [
+      "JavaScript",
+      "jQuery",
+      "AngularJS",
+      "Angular",
+      "React",
+      "TypeScript",
+      "Vue.js",
+      "Node.js",
+      "Python",
+    ],
+  },
+  {
+    title: "Database Menu",
+    description: "Database concepts, queries, design, and performance.",
+    Icon: Database,
+    tone: "bg-success-soft text-success",
+    items: ["SQL Server", "MongoDB", "RavenDB", "Cosmos DB", "SQLite", "PostgreSQL"],
+  },
+  {
+    title: "Azure Menu",
+    description: "Cloud, deployment, DevOps, and production services.",
+    Icon: Cloud,
+    tone: "bg-brand-soft text-brand",
+    items: [
+      "Azure",
+      "Azure DevOps",
+      "CI/CD Pipeline",
+      "Kubernetes",
+      "Docker",
+      "App Services",
+      "Logic Apps",
+      "Service Bus",
+      "Storage Accounts",
+      "Application Insights",
+      "Hangfire",
+      "Azure Functions",
+      "SignalR",
+    ],
+  },
+  {
+    title: "AI Menu",
+    description: "Interview topics for current AI-powered development.",
+    Icon: BrainCircuit,
+    tone: "bg-ai-accent-soft text-ai-accent",
+    items: ["AI Fundamentals", "Generative AI", "Prompt Engineering", "Chatbots", "Model APIs", "AI App Design"],
+  },
+  {
+    title: "Integrations Menu",
+    description: "Payment, enterprise, and communication integrations.",
+    Icon: CreditCard,
+    tone: "bg-success-soft text-success",
+    items: [
+      "Payment Gateways",
+      "Paytm",
+      "PayPal",
+      "CCAvenue",
+      "Razorpay",
+      "SAP Function Modules",
+      "Salesforce Functions",
+      "Salesforce Data Extensions",
+      "SMS Integration",
+      "WhatsApp Integration",
+      "Email Integration",
+    ],
   },
 ];
 
@@ -100,11 +209,11 @@ function Index() {
             <a href="#practice" className="transition-colors hover:text-brand">
               Practice
             </a>
+            <a href="#topic-menu" className="transition-colors hover:text-brand">
+              Menu
+            </a>
             <a href="#roadmap" className="transition-colors hover:text-brand">
               Roadmaps
-            </a>
-            <a href="#pricing" className="transition-colors hover:text-brand">
-              Pricing
             </a>
           </div>
           <div className="flex items-center gap-3">
@@ -122,13 +231,13 @@ function Index() {
         <section className="mx-auto grid max-w-6xl items-center gap-12 px-4 pb-10 pt-14 sm:px-6 lg:grid-cols-2">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-glass-border bg-glass px-3 py-1 text-xs font-semibold text-ai-accent shadow-sm backdrop-blur-md">
-              <span className="size-2 rounded-full bg-ai-accent" /> 12,000+ questions with video
+              <span className="size-2 rounded-full bg-ai-accent" /> 12,000+ questions across 50+ topics
             </span>
             <h1 className="mt-5 font-display text-5xl font-bold leading-[1.05] tracking-normal sm:text-6xl">
               Ace your next <span className="text-ai-gradient">developer interview</span>
             </h1>
             <p className="mt-5 max-w-md text-lg text-soft-ink">
-              Every question paired with a clear explanation, a walkthrough video, and a runnable example — so you practice until it becomes second nature.
+              Every .NET, JavaScript, database, cloud, AI, and integration question paired with a clear explanation, video walkthrough, and runnable example.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Button asChild variant="hero" size="hero">
@@ -152,8 +261,8 @@ function Index() {
                 <dd className="text-xs text-faint-ink">Videos</dd>
               </div>
               <div>
-                <dt className="font-display text-2xl font-bold">98%</dt>
-                <dd className="text-xs text-faint-ink">Pass rate</dd>
+                <dt className="font-display text-2xl font-bold">50+</dt>
+                <dd className="text-xs text-faint-ink">Topics</dd>
               </div>
             </dl>
           </div>
@@ -196,7 +305,7 @@ function Index() {
         <section id="questions" className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
           <div className="mb-5 flex items-end justify-between gap-4">
             <h2 className="font-display text-2xl font-bold tracking-normal">Browse by topic</h2>
-            <a className="text-sm font-semibold text-brand transition-colors hover:text-ai-accent" href="#practice">
+            <a className="text-sm font-semibold text-brand transition-colors hover:text-ai-accent" href="#topic-menu">
               View all
             </a>
           </div>
@@ -206,12 +315,53 @@ function Index() {
                 key={topic.title}
                 className="rounded-2xl border border-glass-border bg-glass p-5 backdrop-blur-xl transition-colors hover:bg-glass-strong"
               >
-                <div className="text-3xl" aria-hidden="true">
+                <div className="flex size-11 items-center justify-center rounded-xl bg-brand-soft font-display text-sm font-bold text-brand" aria-hidden="true">
                   {topic.icon}
                 </div>
                 <h3 className="mt-3 font-display font-semibold">{topic.title}</h3>
                 <p className="mt-1 text-sm text-soft-ink">{topic.description}</p>
                 <div className="mt-4 text-xs font-semibold text-brand">{topic.count}</div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="topic-menu" className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+          <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm font-semibold text-ai-accent">Interview topic menu</p>
+              <h2 className="font-display text-2xl font-bold tracking-normal">Choose a technology to practice</h2>
+            </div>
+            <p className="max-w-md text-sm text-soft-ink">
+              Each option can contain questions, explanation text, video, code examples, and practice tasks.
+            </p>
+          </div>
+          <div className="grid gap-4 lg:grid-cols-2">
+            {menuGroups.map(({ title, description, Icon, tone, items }) => (
+              <article
+                key={title}
+                className="rounded-3xl border border-glass-border bg-glass p-5 shadow-ai-soft backdrop-blur-xl sm:p-6"
+              >
+                <div className="flex items-start gap-3">
+                  <div className={`inline-flex size-11 shrink-0 items-center justify-center rounded-xl ${tone}`}>
+                    <Icon aria-hidden="true" />
+                  </div>
+                  <div>
+                    <h3 className="font-display text-xl font-semibold tracking-normal">{title}</h3>
+                    <p className="mt-1 text-sm text-soft-ink">{description}</p>
+                  </div>
+                </div>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {items.map((item) => (
+                    <a
+                      key={item}
+                      href="#practice"
+                      className="rounded-full border border-glass-border bg-glass-strong px-3 py-1.5 text-sm font-medium text-soft-ink transition-colors hover:text-brand"
+                    >
+                      {item}
+                    </a>
+                  ))}
+                </div>
               </article>
             ))}
           </div>
