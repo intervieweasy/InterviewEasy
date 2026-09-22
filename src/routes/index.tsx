@@ -1,9 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import {
   ArrowRight,
   BookOpen,
   BrainCircuit,
   Braces,
+  ChevronLeft,
+  ChevronRight,
   Cloud,
   Code2,
   CreditCard,
@@ -185,7 +188,39 @@ const steps = [
   },
 ];
 
+const featuredVideos = [
+  {
+    title: "C# Interview Questions and Answers",
+    topic: "C#",
+    duration: "18 min",
+    embedUrl: "https://www.youtube-nocookie.com/embed/8msl4Y8oIoU",
+  },
+  {
+    title: "ASP.NET Core Web API Interview Guide",
+    topic: "ASP.NET Core",
+    duration: "16 min",
+    embedUrl: "https://www.youtube-nocookie.com/embed/fmvcAzHpsk8",
+  },
+  {
+    title: "JavaScript Interview Questions",
+    topic: "JavaScript",
+    duration: "13 min",
+    embedUrl: "https://www.youtube-nocookie.com/embed/9YkUCxvaLEk",
+  },
+];
+
 function Index() {
+  const [activeVideo, setActiveVideo] = useState(0);
+  const video = featuredVideos[activeVideo];
+
+  const showPreviousVideo = () => {
+    setActiveVideo((current) => (current - 1 + featuredVideos.length) % featuredVideos.length);
+  };
+
+  const showNextVideo = () => {
+    setActiveVideo((current) => (current + 1) % featuredVideos.length);
+  };
+
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-cloud-gradient text-ink">
       <div className="pointer-events-none absolute -left-24 -top-24 size-[420px] rounded-full bg-brand-glow blur-[120px]" />
@@ -267,39 +302,62 @@ function Index() {
             </dl>
           </div>
 
-          <div className="animate-floaty">
-            <article className="rounded-3xl border border-glass-border bg-glass p-5 shadow-ai-card backdrop-blur-xl sm:p-6">
-              <div className="flex items-center justify-between">
-                <span className="rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-brand">
-                  System Design
-                </span>
-                <span className="text-xs font-medium text-faint-ink">Hard</span>
+          <article className="overflow-hidden rounded-3xl border border-glass-border bg-glass p-3 shadow-ai-card backdrop-blur-xl sm:p-4">
+            <div className="relative aspect-video overflow-hidden rounded-2xl bg-ink">
+              <iframe
+                key={video.embedUrl}
+                className="size-full"
+                src={video.embedUrl}
+                title={video.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+            <div className="flex items-center justify-between gap-4 px-1 pb-1 pt-4">
+              <div className="min-w-0">
+                <div className="flex items-center gap-2 text-xs font-semibold text-brand">
+                  <span>{video.topic}</span>
+                  <span aria-hidden="true">•</span>
+                  <span className="text-faint-ink">{video.duration}</span>
+                </div>
+                <h2 className="mt-1 truncate font-display text-lg font-semibold">{video.title}</h2>
               </div>
-              <h2 className="mt-4 font-display text-xl font-semibold leading-snug">
-                Design a rate limiter for a public API
-              </h2>
-              <p className="mt-2 text-sm text-soft-ink">
-                Token bucket vs sliding window — trade-offs, edge cases, and a working example.
-              </p>
-              <div className="mt-5 grid grid-cols-3 gap-3">
-                <div className="rounded-xl border border-glass-border bg-glass-strong p-3 text-center">
-                  <div className="font-display font-bold text-brand">04:12</div>
-                  <div className="mt-1 text-[11px] text-faint-ink">Video</div>
-                </div>
-                <div className="rounded-xl border border-glass-border bg-glass-strong p-3 text-center">
-                  <div className="font-display font-bold text-ai-accent">12</div>
-                  <div className="mt-1 text-[11px] text-faint-ink">Steps</div>
-                </div>
-                <div className="rounded-xl border border-glass-border bg-glass-strong p-3 text-center">
-                  <div className="font-display font-bold text-success">4.9</div>
-                  <div className="mt-1 text-[11px] text-faint-ink">Rating</div>
-                </div>
+              <div className="flex shrink-0 gap-2">
+                <Button
+                  type="button"
+                  variant="glass"
+                  size="icon"
+                  onClick={showPreviousVideo}
+                  aria-label="Previous video"
+                  title="Previous video"
+                >
+                  <ChevronLeft aria-hidden="true" />
+                </Button>
+                <Button
+                  type="button"
+                  variant="hero"
+                  size="icon"
+                  onClick={showNextVideo}
+                  aria-label="Next video"
+                  title="Next video"
+                >
+                  <ChevronRight aria-hidden="true" />
+                </Button>
               </div>
-              <Button asChild variant="hero" size="hero" className="mt-5 w-full">
-                <a href="#questions">Open question</a>
-              </Button>
-            </article>
-          </div>
+            </div>
+            <div className="flex justify-center gap-2 pb-1 pt-2" aria-label="Choose a video">
+              {featuredVideos.map((item, index) => (
+                <button
+                  key={item.title}
+                  type="button"
+                  onClick={() => setActiveVideo(index)}
+                  className={`h-2 rounded-full transition-all ${index === activeVideo ? "w-7 bg-brand" : "w-2 bg-cloud-mid"}`}
+                  aria-label={`Show video ${index + 1}: ${item.title}`}
+                  aria-current={index === activeVideo ? "true" : undefined}
+                />
+              ))}
+            </div>
+          </article>
         </section>
 
         <section id="questions" className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
