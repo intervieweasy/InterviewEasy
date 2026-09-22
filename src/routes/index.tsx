@@ -207,11 +207,11 @@ const featuredVideos = [
     duration: "13 min",
     embedUrl: "https://www.youtube-nocookie.com/embed/9YkUCxvaLEk",
   },
-];
+] as const;
 
 function Index() {
   const [activeVideo, setActiveVideo] = useState(0);
-  const video = featuredVideos[activeVideo];
+  const video = featuredVideos[activeVideo] ?? featuredVideos[0];
 
   const showPreviousVideo = () => {
     setActiveVideo((current) => (current - 1 + featuredVideos.length) % featuredVideos.length);
