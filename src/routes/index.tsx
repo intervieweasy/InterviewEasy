@@ -227,7 +227,7 @@ function Index() {
       <div className="pointer-events-none absolute -right-24 top-1/3 size-[420px] rounded-full bg-ai-accent-soft blur-[120px]" />
       <div className="pointer-events-none absolute bottom-0 left-1/3 size-[360px] rounded-full bg-cloud-cool blur-[120px]" />
 
-      <header className="relative z-20 mx-auto max-w-6xl px-4 pt-5 sm:px-6 sm:pt-6">
+      <header className="container-fluid relative z-20 pt-5 sm:pt-6">
         <nav className="flex items-center justify-between rounded-2xl border border-glass-border bg-glass px-4 py-3 shadow-ai-soft backdrop-blur-xl sm:px-5">
           <a href="#top" className="flex items-center gap-2" aria-label="Interview Easy home">
             <span className="grid size-9 place-items-center rounded-xl bg-ai-gradient font-display text-lg font-bold text-brand-foreground">
@@ -263,7 +263,7 @@ function Index() {
       </header>
 
       <main id="top" className="relative z-10">
-        <section className="mx-auto grid max-w-6xl items-center gap-12 px-4 pb-10 pt-14 sm:px-6 lg:grid-cols-2">
+        <section className="container-fluid grid items-center gap-12 pb-10 pt-14 lg:grid-cols-2">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-glass-border bg-glass px-3 py-1 text-xs font-semibold text-ai-accent shadow-sm backdrop-blur-md">
               <span className="size-2 rounded-full bg-ai-accent" /> 12,000+ questions across 50+ topics
@@ -362,7 +362,7 @@ function Index() {
           </article>
         </section>
 
-        <section id="questions" className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+        <section id="questions" className="container-fluid py-8">
           <div className="mb-5 flex items-end justify-between gap-4">
             <h2 className="font-display text-2xl font-bold tracking-normal">Browse by topic</h2>
             <a className="text-sm font-semibold text-brand transition-colors hover:text-ai-accent" href="#topic-menu">
@@ -386,7 +386,7 @@ function Index() {
           </div>
         </section>
 
-        <section id="topic-menu" className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+        <section id="topic-menu" className="container-fluid py-8">
           <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="text-sm font-semibold text-ai-accent">Interview topic menu</p>
@@ -427,7 +427,7 @@ function Index() {
           </div>
         </section>
 
-        <section id="practice" className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+        <section id="practice" className="container-fluid py-8">
           <div className="grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
             <div className="rounded-3xl border border-glass-border bg-glass p-6 shadow-ai-soft backdrop-blur-xl">
               <div className="inline-flex size-11 items-center justify-center rounded-xl bg-ai-accent-soft text-ai-accent">
@@ -466,7 +466,7 @@ function Index() {
           </div>
         </section>
 
-        <section id="roadmap" className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+        <section id="roadmap" className="container-fluid py-10">
           <div className="rounded-3xl border border-glass-border bg-glass p-6 shadow-ai-soft backdrop-blur-xl sm:p-8">
             <div className="flex items-center gap-3">
               <Sparkles className="text-ai-accent" aria-hidden="true" />
@@ -486,7 +486,7 @@ function Index() {
           </div>
         </section>
 
-        <section id="pricing" className="mx-auto max-w-6xl px-4 pb-4 pt-2 sm:px-6">
+        <section id="pricing" className="container-fluid pb-4 pt-2">
           <div className="rounded-3xl border border-glass-border bg-glass p-6 text-center shadow-ai-soft backdrop-blur-xl sm:p-8">
             <h2 className="font-display text-2xl font-bold tracking-normal">Start with free practice</h2>
             <p className="mx-auto mt-2 max-w-xl text-sm text-soft-ink">
