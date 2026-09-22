@@ -347,11 +347,13 @@ function Index() {
             </div>
             <div className="flex justify-center gap-2 pb-1 pt-2" aria-label="Choose a video">
               {featuredVideos.map((item, index) => (
-                <button
+                <Button
                   key={item.title}
                   type="button"
+                  variant="ghost"
+                  size="icon"
                   onClick={() => setActiveVideo(index)}
-                  className={`h-2 rounded-full transition-all ${index === activeVideo ? "w-7 bg-brand" : "w-2 bg-cloud-mid"}`}
+                  className={`h-4 min-w-0 rounded-full p-0 transition-all ${index === activeVideo ? "w-7 bg-brand hover:bg-brand" : "w-4 bg-cloud-mid hover:bg-brand-soft"}`}
                   aria-label={`Show video ${index + 1}: ${item.title}`}
                   aria-current={index === activeVideo ? "true" : undefined}
                 />
