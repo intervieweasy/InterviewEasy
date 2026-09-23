@@ -1,22 +1,68 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   ArrowRight,
   BookOpen,
   BrainCircuit,
   Braces,
+  Building2,
+  Check,
   ChevronLeft,
   ChevronRight,
   Cloud,
   Code2,
   CreditCard,
-  ExternalLink,
   Database,
   Layers3,
   Play,
   Search,
   Sparkles,
+  UserRound,
+  Workflow,
 } from "lucide-react";
+
+const tracks = [
+  {
+    icon: Building2,
+    title: "Corporate training",
+    subtitle: "For teams and hiring managers",
+    tone: "bg-brand-soft text-brand",
+    price: "Custom quote per cohort",
+    primary: true,
+    cta: "Talk to us",
+    ctaTo: "/contact",
+    points: [
+      "Skill assessment for the whole team before the programme starts",
+      "Curriculum built from your stack: .NET, JavaScript, cloud, DevOps",
+      "Live trainer sessions plus recorded walkthroughs",
+      "Mock interview panels and a manager progress dashboard",
+    ],
+  },
+  {
+    icon: UserRound,
+    title: "Individual",
+    subtitle: "For developers preparing on their own",
+    tone: "bg-ai-accent-soft text-ai-accent",
+    price: "Free to start, upgrade any time",
+    primary: false,
+    cta: "Start practicing",
+    ctaTo: "/",
+    points: [
+      "Full question library with explanations, videos, and examples",
+      "Pick a topic path and practise at your own pace",
+      "Daily practice sets and bookmarked answers",
+      "Interview-day checklists for each technology",
+    ],
+  },
+] as const;
+
+const workflow = [
+  { title: "Tell us your goal", description: "Choose corporate training or individual practice." },
+  { title: "Skill check", description: "A short assessment shows your current level." },
+  { title: "Your plan", description: "We map topics and a weekly schedule." },
+  { title: "Learn and practise", description: "Explanations, videos, and hands-on examples." },
+  { title: "Mock interviews", description: "Feedback rounds until you are interview ready." },
+];
 
 import { Button } from "@/components/ui/button";
 
@@ -251,13 +297,19 @@ function Index() {
             <a href="#roadmap" className="transition-colors hover:text-brand">
               Roadmaps
             </a>
+            <Link to="/careers" className="transition-colors hover:text-brand">
+              Careers
+            </Link>
+            <Link to="/contact" className="transition-colors hover:text-brand">
+              Contact
+            </Link>
           </div>
           <div className="flex items-center gap-3">
             <a className="hidden text-sm font-medium text-soft-ink hover:text-brand sm:inline" href="#questions">
               Sign in
             </a>
             <Button asChild variant="hero" size="sm" className="rounded-xl px-4 py-2">
-              <a href="#questions">Get started</a>
+              <a href="#get-started">Get started</a>
             </Button>
           </div>
         </nav>
