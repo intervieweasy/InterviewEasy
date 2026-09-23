@@ -1,4 +1,4 @@
-# InterviewHub - Enterprise Interview Platform
+# InterviewHub - Enterprise Interview Platform (Updated)
 
 ## 📋 Project Overview
 
@@ -7,10 +7,10 @@
 ### Key Capabilities
 - 🎥 Real-time audio/video interviews with recording
 - 💻 Collaborative code editor with multi-language support
+- 📝 **Client-provided question sets (Basic/Medium/Advanced) organized by course & language**
 - 📅 Intelligent scheduling and calendar management
-- 📝 Dynamic, client-specific feedback forms
-- 🎯 Question bank with difficulty levels (Basic/Intermediate/Advanced)
-- 📊 Analytics and reporting dashboard
+- 🎯 **Automated test case execution for coding questions**
+- 📊 Dynamic, client-specific feedback forms
 - 🔒 Enterprise-grade security and compliance
 
 ---
@@ -57,30 +57,94 @@
 
 ---
 
+## 🧩 Question Taxonomy (Core of InterviewHub)
+
+Every interview question is defined across **four orthogonal dimensions**:
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                    QUESTION DIMENSIONS                               │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                      │
+│   1. DIFFICULTY              2. COURSE / TRACK                      │
+│      • Basic                    • C# & .NET                         │
+│      • Medium                   • SQL & Databases                   │
+│      • Advanced                 • Data Structures                   │
+│                                 • System Design                     │
+│                                 • DevOps                           │
+│                                 • Frontend (React/Angular)          │
+│                                 • Cloud (AWS/Azure)                 │
+│                                                                      │
+│   3. LANGUAGE / RUNTIME      4. TOPICS (free tags)                  │
+│      • csharp                   • linq, async-await, ef-core        │
+│      • dotnet                   • joins, indexing, transactions     │
+│      • sql                      • arrays, hashmaps, recursion       │
+│      • python                   • microservices, caching            │
+│      • java                     • harness, kubernetes, terraform    │
+│      • javascript/typescript                                        │
+│      • go, rust, cpp                                                │
+│                                                                      │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### Example Question Matrix
+
+| Course | Language | Basic | Medium | Advanced |
+|--------|----------|-------|--------|----------|
+| C# & .NET | `csharp`, `dotnet` | 12 | 20 | 8 |
+| SQL & Databases | `sql` | 15 | 18 | 6 |
+| Data Structures | `csharp`, `java`, `python` | 20 | 25 | 10 |
+| System Design | `text`, `csharp` | 4 | 8 | 6 |
+| DevOps | `yaml`, `bash`, `text` | 6 | 10 | 5 |
+| Frontend | `javascript`, `typescript` | 10 | 12 | 4 |
+
+A **Client requirement** for "Senior .NET Developer" would pull questions like:
+- Course: `C# & .NET` → Language: `csharp` → Difficulty: `medium`/`advanced`
+- Course: `SQL & Databases` → Language: `sql` → Difficulty: `medium`
+- Course: `System Design` → Difficulty: `advanced`
+
+---
+
 ## 👥 User Personas & Workflows
 
 ### 1. 🏢 Client (Hiring Company)
 
-**Primary Goals:** Schedule interviews, define requirements, review feedback, make hiring decisions.
+**Primary Goals:** Define requirements, upload course-wise questions with test cases, schedule interviews, review feedback.
 
-#### Workflow: Create Interview Request
+#### Workflow: Create Requirement + Upload Questions
 ```
-Login → Dashboard → Create New Requirement
+Login → Requirements → New Requirement
     │
-    ├── Select Role (e.g., "Senior DevOps Engineer")
-    ├── Define Skills Matrix
-    │       ├── Required: Harness, Kubernetes, Terraform
-    │       └── Nice-to-have: AWS, Prometheus
-    ├── Configure Feedback Template
-    │       ├── Harness Proficiency (1-5 scale)
-    │       ├── DevOps Fundamentals (1-5 scale)
+    ├── Step 1: Role Details
+    │       ├── Title: "Senior .NET Developer"
+    │       ├── Skills: [C#, .NET, SQL, Azure]
+    │       └── Duration: 60 min
+    │
+    ├── Step 2: Define Courses
+    │       ├── Course 1: "C# & .NET"   → Language: csharp
+    │       ├── Course 2: "SQL & DB"    → Language: sql
+    │       └── Course 3: "System Design" → Language: text
+    │
+    ├── Step 3: Upload Questions per Course
+    │       ├── Upload C#_questions.json
+    │       │       ├── Basic (12)
+    │       │       ├── Medium (20)
+    │       │       └── Advanced (8)
+    │       ├── Upload SQL_questions.json
+    │       │       ├── Basic (15)
+    │       │       ├── Medium (18)
+    │       │       └── Advanced (6)
+    │       └── Upload SystemDesign_questions.json
+    │               ├── Medium (8)
+    │               └── Advanced (6)
+    │
+    ├── Step 4: Configure Feedback Template
+    │       ├── C# Proficiency (1-5)
+    │       ├── SQL Fundamentals (1-5)
     │       ├── System Design (text)
-    │       └── Custom Questions
-    ├── Set Difficulty Distribution
-    │       ├── Basic: 30%
-    │       ├── Intermediate: 50%
-    │       └── Advanced: 20%
-    └── Submit Request → Admin Review
+    │       └── Overall Recommendation
+    │
+    └── Step 5: Submit → Admin activates
 ```
 
 #### Workflow: Review Interview Results
@@ -89,265 +153,151 @@ Login → Interviews → Select Completed Interview
     │
     ├── View Recording (HLS Stream)
     ├── Review Code Submissions
+    │       ├── Question: "Implement Repository Pattern"
+    │       ├── Course: C# & .NET | Difficulty: Medium
+    │       ├── Test Cases: 7/10 passed ✅
+    │       └── Time Spent: 18 min
     ├── Read Interviewer Feedback
-    │       ├── Harness: 4/5 ⭐
-    │       ├── DevOps: 5/5 ⭐
-    │       └── Comments: "Strong DevOps, learning Harness"
-    ├── Make Decision
-    │       ├── ✅ Hire
-    │       ├── ❌ Reject
-    │       └── 🔄 Next Round
-    └── Export Report (PDF)
+    └── Make Hiring Decision
 ```
 
 ---
 
 ### 2. 👨‍💼 Interviewer
 
-**Primary Goals:** Conduct interviews, assess candidates, provide structured feedback.
+**Primary Goals:** Conduct interviews, select questions from client-provided sets, assess candidates.
 
 #### Workflow: Conduct Interview
 ```
 Login → Today's Schedule → Select Interview
     │
-    ├── Pre-Interview (15 min before)
-    │       ├── Review Candidate Profile
-    │       ├── Review Job Requirements
-    │       ├── Preview Question Bank
-    │       └── Test Audio/Video
+    ├── Pre-Interview Review
+    │       ├── Client: HirePro
+    │       ├── Role: Senior .NET Developer
+    │       └── Available Questions:
+    │               ├── C# & .NET (40)
+    │               ├── SQL & DB (39)
+    │               └── System Design (14)
     │
-    ├── Start Interview Session
-    │       ├── 🎥 Video Call Initiated
-    │       ├── 📝 Code Editor Shared
-    │       ├── 💬 Chat Available
-    │       └── ⏺️ Recording Started
+    ├── Start Interview
+    │
+    ├── Question Picker
+    │       ├── Filter: Course=[C# & .NET ▼]
+    │       │         Language=[csharp ▼]
+    │       │         Difficulty=[● Medium  ○ Advanced]
+    │       │
+    │       ├── Results:
+    │       │   • Implement Repository Pattern     [Preview] [Add]
+    │       │   • Async/Await Deadlock Scenario    [Preview] [Add]
+    │       │   • LINQ GroupBy Optimization        [Preview] [Add]
+    │       │   • Dependency Injection Lifetimes   [Preview] [Add]
+    │       │
+    │       └── Preview shows:
+    │               ├── Problem statement
+    │               ├── Starter code
+    │               ├── Sample test cases
+    │               └── Expected duration
     │
     ├── During Interview
-    │       ├── Select Questions (Basic/Int/Adv)
-    │       ├── Send Coding Challenge
-    │       ├── Observe Code Changes (Real-time)
-    │       ├── Run/Test Code
-    │       ├── Take Notes
-    │       └── Adjust Time Remaining
+    │       ├── Push question → candidate screen
+    │       ├── Watch real-time code changes
+    │       ├── Candidate clicks "Run" → sample tests
+    │       ├── Candidate clicks "Submit" → hidden tests
+    │       └── See pass/fail + score in real-time
     │
-    └── End Interview
-            ├── Stop Recording
-            ├── Submit Feedback Form
-            │       ├── Dynamic fields per client
-            │       ├── Ratings & Comments
-            │       └── Overall Recommendation
-            └── Schedule Follow-up (if needed)
+    └── End Interview → Submit Feedback
 ```
 
-#### Workflow: Question Selection
+#### Workflow: Question Selection Filter
 ```
-Interview Dashboard → Question Bank
+Question Picker Panel
     │
-    ├── Filter by:
-    │       ├── Language (Python, Java, C#, JS)
-    │       ├── Difficulty (Basic/Intermediate/Advanced)
-    │       ├── Topic (Algorithms, System Design, DevOps)
-    │       └── Client Requirements (auto-suggested)
-    │
-    ├── Preview Question
-    │       ├── Problem Statement
-    │       ├── Sample Test Cases
-    │       ├── Expected Solution
-    │       └── Time Estimate
-    │
-    └── Add to Interview Session
-            └── Auto-sync to Candidate Screen
+    ├── Course:        [C# & .NET        ▼]
+    ├── Language:      [csharp           ▼]
+    ├── Difficulty:    [Medium] [Advanced]  (multi-select)
+    ├── Topics:        [linq, async, di]  (autocomplete)
+    └── Used before:   [ ] Hide              
+    
+    Sort by: [ Difficulty ↑ | Times Used | Avg Time ]
 ```
 
 ---
 
 ### 3. 👤 Candidate
 
-**Primary Goals:** Attend interview, demonstrate skills, complete assessments.
+**Primary Goals:** Attend interview, solve coding questions, run test cases.
 
 #### Workflow: Attend Interview
 ```
-Receive Email → Click Magic Link → Verify Identity
+Magic Link → Identity Verification → Pre-Check (Cam/Mic)
     │
-    ├── Pre-Interview Check
-    │       ├── Camera Test
-    │       ├── Microphone Test
-    │       ├── Browser Compatibility
-    │       └── Internet Speed Test
-    │
-    ├── Join Waiting Room
-    │       ├── View Interview Details
-    │       ├── Read Instructions
-    │       └── Wait for Interviewer
+    ├── Waiting Room
     │
     ├── Interview Session
     │       ├── 🎥 Video/Audio Active
-    │       ├── 📝 Code Editor (Shared)
-    │       ├── ▶️ Run Code
-    │       ├── 📤 Submit Solution
+    │       ├── 📝 Code Editor (language auto-set)
+    │       ├── 📋 Problem Statement Panel
+    │       ├── 🧪 Sample Test Cases (visible)
+    │       ├── ▶️  Run Code (against samples)
+    │       ├── 📤 Submit (against hidden tests)
     │       └── 💬 Chat with Interviewer
     │
-    └── Interview Complete
-            ├── Thank You Screen
-            ├── Survey (Optional)
-            └── Await Results
+    └── Session Complete
+```
+
+#### Candidate Code Editor View
+```
+┌──────────────────────────────────────────────────────────────┐
+│ Question: Implement Repository Pattern                       │
+│ Course: C# & .NET  |  Difficulty: Medium  |  Time: 20:00 ⏱  │
+├──────────────────────────────────────────────────────────────┤
+│ Problem Statement (Markdown rendered)                        │
+│ ────────────────────────────────────────────────             │
+│ Implement a generic repository pattern with...               │
+│                                                              │
+│ Examples:                                                    │
+│   Input:  repo.Add(new User{...})                            │
+│   Output: id assigned                                         │
+├──────────────────────────────────────────────────────────────┤
+│ Code Editor (Monaco) - csharp                                │
+│ ────────────────────────────────────────────────             │
+│ public interface IRepository<T> {                            │
+│     T Add(T entity);                                          │
+│     // Your code here                                         │
+│ }                                                             │
+│                                                              │
+├──────────────────────────────────────────────────────────────┤
+│ [▶ Run]  [📤 Submit]                    Sample Tests (3/3) ✅│
+│ ┌────────────────────────────────────────────────────────┐   │
+│ │ ✅ tc-001: Add entity returns with ID                  │   │
+│ │ ✅ tc-002: Add null throws ArgumentNullException       │   │
+│ │ ✅ tc-003: Generic type constraint works               │   │
+│ └────────────────────────────────────────────────────────┘   │
+└──────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
 ### 4. 🔧 Admin
 
-**Primary Goals:** Manage platform, configure clients, oversee interviews.
+**Primary Goals:** Manage clients, review uploaded question sets, oversee the platform.
 
-#### Workflow: Client Onboarding
+#### Workflow: Client Onboarding & Question Review
 ```
-Login → Clients → Add New Client
+Login → Clients → HirePro → Requirements → "Senior .NET Developer"
     │
-    ├── Company Details
-    │       ├── Name, Logo, Contact
-    │       └── Billing Information
+    ├── Review Uploaded Questions
+    │       ├── C# & .NET:    40 questions ✅ validated
+    │       ├── SQL & DB:     39 questions ✅ validated
+    │       └── System Design: 14 questions ⚠️ 2 warnings
+    │               ├── Warning: "tc-005 expected_output empty"
+    │               └── Warning: "Missing solution_code for 'text' lang"
     │
-    ├── Configure Feedback Templates
-    │       ├── Template Name
-    │       ├── Custom Fields (JSON Schema)
-    │       ├── Rating Scales
-    │       └── Required/Optional Fields
+    ├── Approve / Request Changes
     │
-    ├── User Management
-    │       ├── Add Recruiters
-    │       ├── Set Permissions
-    │       └── Configure SSO
+    ├── Assign Interviewers
     │
-    └── Set Quotas & Limits
-            ├── Monthly Interviews
-            ├── Concurrent Sessions
-            └── Storage Limits
-```
-
-#### Workflow: Platform Monitoring
-```
-Admin Dashboard
-    │
-    ├── Real-Time Metrics
-    │       ├── Active Interviews: 23
-    │       ├── Scheduled Today: 147
-    │       ├── System Health: ✅
-    │       └── Avg. Rating: 4.2/5
-    │
-    ├── Alerts
-    │       ├── ⚠️ High API Latency
-    │       ├── ⚠️ Sandbox Queue Buildup
-    │       └── ✅ All Systems Operational
-    │
-    └── Reports
-            ├── Usage Analytics
-            ├── Client Reports
-            └── Compliance Audit Logs
-```
-
----
-
-## 🔄 Core System Workflows
-
-### Workflow 1: Interview Scheduling
-
-```
-┌──────────┐     ┌──────────┐     ┌──────────┐     ┌──────────┐
-│  Client  │────▶│  Admin   │────▶│Interviewer│────▶│ Candidate│
-│ Requests │     │ Reviews  │     │ Accepts  │     │ Receives │
-│Interview │     │ & Assigns│     │ & Schedules│    │ Invite   │
-└──────────┘     └──────────┘     └──────────┘     └──────────┘
-     │                │                │                │
-     ▼                ▼                ▼                ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    SCHEDULING ENGINE                         │
-│  • Calendar Sync (Google/Outlook)                           │
-│  • Timezone Detection                                        │
-│  • Conflict Resolution                                       │
-│  • Reminder Notifications (Email/SMS/Slack)                 │
-│  • Buffer Time Management                                    │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### Workflow 2: Live Interview Session
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    INTERVIEW SESSION                         │
-├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐     │
-│  │   WebRTC    │    │   SignalR   │    │   Sandbox   │     │
-│  │  (Video/    │◀──▶│  (Code Sync │◀──▶│  (Code      │     │
-│  │   Audio)    │    │   Chat)     │    │   Execution)│     │
-│  └─────────────┘    └─────────────┘    └─────────────┘     │
-│         │                  │                  │             │
-│         ▼                  ▼                  ▼             │
-│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐     │
-│  │  Recording  │    │   Session   │    │    Code     │     │
-│  │   Service   │    │    State    │    │  Artifacts  │     │
-│  └─────────────┘    └─────────────┘    └─────────────┘     │
-│         │                  │                  │             │
-│         └──────────────────┼──────────────────┘             │
-│                            ▼                                 │
-│                   ┌─────────────────┐                        │
-│                   │  S3/Blob Storage│                        │
-│                   │  + CDN Delivery │                        │
-│                   └─────────────────┘                        │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### Workflow 3: Dynamic Feedback Collection
-
-```
-┌──────────────────────────────────────────────────────────────┐
-│                  FEEDBACK WORKFLOW                            │
-├──────────────────────────────────────────────────────────────┤
-│                                                               │
-│  1. CLIENT CONFIGURES (Setup Phase)                          │
-│     ┌────────────────────────────────────────────┐           │
-│     │ Feedback Template: "Senior DevOps Role"    │           │
-│     │ ┌────────────────────────────────────────┐ │           │
-│     │ │ Field: Harness Proficiency             │ │           │
-│     │ │ Type: Rating (1-5)                     │ │           │
-│     │ │ Weight: 30%                            │ │           │
-│     │ ├────────────────────────────────────────┤ │           │
-│     │ │ Field: DevOps Fundamentals             │ │           │
-│     │ │ Type: Rating (1-5)                     │ │           │
-│     │ │ Weight: 40%                            │ │           │
-│     │ ├────────────────────────────────────────┤ │           │
-│     │ │ Field: System Design                   │ │           │
-│     │ │ Type: Text                             │ │           │
-│     │ │ Weight: 30%                            │ │           │
-│     │ └────────────────────────────────────────┘ │           │
-│     └────────────────────────────────────────────┘           │
-│                          │                                    │
-│                          ▼                                    │
-│  2. STORED AS JSONB IN POSTGRESQL                            │
-│     {                                                         │
-│       "template_id": "devops_senior_001",                    │
-│       "fields": [...]                                         │
-│     }                                                         │
-│                          │                                    │
-│                          ▼                                    │
-│  3. INTERVIEWER SEES DYNAMIC FORM                            │
-│     ┌────────────────────────────────────────────┐           │
-│     │ Rate Harness Proficiency:                  │           │
-│     │ ⭐⭐⭐⭐☆ (4/5)                              │           │
-│     │                                             │           │
-│     │ Rate DevOps Fundamentals:                  │           │
-│     │ ⭐⭐⭐⭐⭐ (5/5)                              │           │
-│     │                                             │           │
-│     │ System Design Notes:                       │           │
-│     │ [Strong understanding of microservices...] │           │
-│     └────────────────────────────────────────────┘           │
-│                          │                                    │
-│                          ▼                                    │
-│  4. CLIENT VIEWS AGGREGATED FEEDBACK                         │
-│     • Harness: 4/5 (Learning)                                │
-│     • DevOps: 5/5 (Expert)                                   │
-│     • Recommendation: HIRE (DevOps-heavy role)               │
-└──────────────────────────────────────────────────────────────┘
+    └── Activate Requirement
 ```
 
 ---
@@ -359,30 +309,32 @@ Admin Dashboard
 | Application | Technology | Purpose |
 |-------------|-----------|---------|
 | Client Portal | React 18 + TypeScript | Hiring company interface |
-| Interviewer App | React 18 + TypeScript | Interview conductor |
-| Candidate Portal | React 18 + TypeScript | Interview participant |
-| Admin Console | Angular 17 + TypeScript | Platform management |
+| Interviewer App | React 18 + TypeScript | Interview conductor + question picker |
+| Candidate Portal | React 18 + TypeScript | Interview participant + code editor |
+| Admin Console | Angular 17 + TypeScript | Platform + question review |
+| Code Editor | Monaco Editor | In-browser IDE |
 | Shared UI Library | Storybook + Tailwind | Component library |
 
 ### Backend
 
 | Service | Technology | Purpose |
 |---------|-----------|---------|
-| Core API | ASP.NET Core 8 | Business logic, CRUD |
+| Core API | ASP.NET Core 8 | Business logic, CRUD, imports |
 | Real-Time Hub | SignalR / Azure SignalR | WebSocket communication |
 | Media Server | LiveKit / Azure ACS | WebRTC SFU |
-| Code Sandbox | Docker + Kubernetes | Isolated code execution |
-| Background Jobs | Hangfire / Azure Functions | Async processing |
+| Code Sandbox | Docker + Kubernetes | Multi-language code execution |
+| Background Jobs | Hangfire / Azure Functions | Import processing, scoring |
+| Import Parser | CsvHelper, YamlDotNet, EPPlus | JSON/YAML/Excel ingestion |
 
 ### Data & Storage
 
 | Component | Technology | Purpose |
 |-----------|-----------|---------|
-| Primary DB | PostgreSQL 16 | Relational data |
+| Primary DB | PostgreSQL 16 | Relational + JSONB for questions |
 | Cache/PubSub | Redis 7 | Session, real-time state |
 | Media Storage | AWS S3 / Azure Blob | Recordings, files |
 | CDN | CloudFront / Azure CDN | Video delivery |
-| Search | Elasticsearch | Question bank search |
+| Search | PostgreSQL GIN indexes | Question filtering |
 
 ### Infrastructure
 
@@ -399,198 +351,426 @@ Admin Dashboard
 
 ## 📊 Database Schema (High-Level)
 
-### Core Entities
-
 ```sql
--- Users & Organizations
-organizations (id, name, type, settings, created_at)
-users (id, org_id, email, role, profile, created_at)
+-- Shared schema (across all tenants)
+CREATE TABLE shared.tenants (
+    id              UUID PRIMARY KEY,
+    name            VARCHAR(200),
+    schema_name     VARCHAR(100),      -- 'tenant_hirepro'
+    routing_mode    VARCHAR(20),       -- 'shared' | 'dedicated'
+    created_at      TIMESTAMPTZ DEFAULT NOW()
+);
 
--- Interview Management
-requirements (id, client_id, role, skills, feedback_template_id)
-interviews (id, requirement_id, candidate_id, interviewer_id, 
-            scheduled_at, status, recording_url)
+-- Inside each tenant schema (e.g., tenant_hirepro)
 
--- Question Bank
-questions (id, title, description, difficulty, language, 
-           topic, test_cases, solution)
-interview_questions (interview_id, question_id, order, time_spent)
+-- 1. Requirements (job openings)
+CREATE TABLE requirements (
+    id                    UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    title                 VARCHAR(200) NOT NULL,
+    description           TEXT,
+    skills                TEXT[],
+    feedback_template_id  UUID,
+    status                VARCHAR(20) DEFAULT 'draft',
+    created_at            TIMESTAMPTZ DEFAULT NOW()
+);
 
--- Feedback (Dynamic Schema)
-feedback_templates (id, client_id, name, schema JSONB)
-feedback_responses (id, interview_id, template_id, 
-                    responses JSONB, overall_rating)
+-- 2. Courses (per requirement, e.g., "C# & .NET", "SQL")
+CREATE TABLE requirement_courses (
+    id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    requirement_id    UUID NOT NULL REFERENCES requirements(id) ON DELETE CASCADE,
+    code              VARCHAR(50) NOT NULL,      -- 'CSHARP_DOTNET'
+    name              VARCHAR(200) NOT NULL,     -- 'C# & .NET'
+    description       TEXT,
+    languages         TEXT[] NOT NULL,           -- ['csharp','dotnet']
+    display_order     INT DEFAULT 0,
+    
+    UNIQUE (requirement_id, code)
+);
 
--- Real-Time State
-sessions (id, interview_id, state JSONB, started_at, ended_at)
-code_snapshots (id, session_id, code, language, timestamp)
+-- 3. Questions (scoped to requirement + course)
+CREATE TABLE requirement_questions (
+    id                  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    requirement_id      UUID NOT NULL REFERENCES requirements(id) ON DELETE CASCADE,
+    course_id           UUID NOT NULL REFERENCES requirement_courses(id) ON DELETE CASCADE,
+    
+    external_id         VARCHAR(100),            -- client's own ID
+    title               VARCHAR(500) NOT NULL,
+    difficulty          VARCHAR(20) NOT NULL 
+                        CHECK (difficulty IN ('basic','medium','advanced')),
+    language            VARCHAR(50) NOT NULL,    -- 'csharp', 'sql', 'python'
+    topics              TEXT[] DEFAULT '{}',     -- ['linq','async','ef-core']
+    
+    problem_statement   JSONB NOT NULL,
+    function_signature  JSONB NOT NULL,
+    starter_code        JSONB NOT NULL,
+    solution_code       JSONB NOT NULL,
+    
+    time_limit_ms       INT DEFAULT 2000,
+    memory_limit_mb     INT DEFAULT 256,
+    evaluation_config   JSONB DEFAULT '{}',
+    
+    is_active           BOOLEAN DEFAULT true,
+    created_at          TIMESTAMPTZ DEFAULT NOW(),
+    
+    UNIQUE (requirement_id, external_id)
+);
 
--- Audit & Compliance
-audit_logs (id, user_id, action, resource, metadata, timestamp)
-recordings (id, interview_id, url, duration, size, status)
+CREATE INDEX idx_questions_filter 
+    ON requirement_questions(requirement_id, course_id, language, difficulty) 
+    WHERE is_active = true;
+
+CREATE INDEX idx_questions_topics 
+    ON requirement_questions USING GIN(topics);
+
+-- 4. Test Cases
+CREATE TABLE requirement_test_cases (
+    id                  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    question_id         UUID NOT NULL REFERENCES requirement_questions(id) ON DELETE CASCADE,
+    external_id         VARCHAR(100),
+    type                VARCHAR(20) NOT NULL 
+                        CHECK (type IN ('sample','hidden','performance')),
+    name                VARCHAR(200),
+    input_data          JSONB,
+    expected_output     JSONB,
+    visible_to_candidate BOOLEAN DEFAULT false,
+    points              INT DEFAULT 10,
+    explanation         TEXT,
+    display_order       INT DEFAULT 0
+);
+
+-- 5. Interview Sessions (question selection snapshot)
+CREATE TABLE interview_sessions (
+    id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    interview_id      UUID NOT NULL,
+    question_id       UUID NOT NULL REFERENCES requirement_questions(id),
+    selected_at       TIMESTAMPTZ DEFAULT NOW(),
+    selected_by       UUID NOT NULL,
+    time_spent_sec    INT,
+    final_score       DECIMAL(5,2),
+    code_snapshot_url TEXT
+);
+
+-- 6. Feedback (dynamic schema)
+CREATE TABLE feedback_templates (
+    id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    requirement_id UUID NOT NULL REFERENCES requirements(id),
+    name          VARCHAR(200),
+    schema        JSONB NOT NULL,      -- dynamic fields
+    created_at    TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE feedback_responses (
+    id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    interview_id      UUID NOT NULL,
+    template_id       UUID NOT NULL REFERENCES feedback_templates(id),
+    responses         JSONB NOT NULL,
+    overall_rating    DECIMAL(3,2),
+    recommendation    VARCHAR(20),
+    submitted_at      TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 7. Import Jobs
+CREATE TABLE requirement_import_jobs (
+    id                  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    requirement_id      UUID NOT NULL REFERENCES requirements(id),
+    submitted_by        UUID NOT NULL,
+    source_filename     VARCHAR(500),
+    source_hash         VARCHAR(64),
+    status              VARCHAR(20),
+    imported_count      INT DEFAULT 0,
+    warning_count       INT DEFAULT 0,
+    failed_count        INT DEFAULT 0,
+    validation_report   JSONB DEFAULT '{}',
+    created_at          TIMESTAMPTZ DEFAULT NOW(),
+    completed_at        TIMESTAMPTZ
+);
+```
+
+---
+
+## 📥 Question Import Format (Client Uploads)
+
+```json
+{
+  "bundle_version": "1.0",
+  "course": {
+    "code": "CSHARP_DOTNET",
+    "name": "C# & .NET",
+    "description": "Core .NET development questions",
+    "languages": ["csharp", "dotnet"]
+  },
+  "questions": [
+    {
+      "external_id": "HP-CS-001",
+      "title": "Implement Repository Pattern",
+      "difficulty": "medium",
+      "language": "csharp",
+      "topics": ["design-patterns", "ef-core", "generics"],
+      
+      "problem_statement": {
+        "markdown": "Implement a generic `IRepository<T>` interface..."
+      },
+      
+      "starter_code": {
+        "csharp": "public interface IRepository<T> {\n    // Your code here\n}"
+      },
+      
+      "solution_code": {
+        "csharp": "public interface IRepository<T> where T : class {\n    T Add(T entity);\n    ...\n}"
+      },
+      
+      "test_cases": [
+        {
+          "id": "tc-001",
+          "type": "sample",
+          "name": "Add entity returns with ID",
+          "input": { "code": "repo.Add(new User{Name=\"A\"})" },
+          "expected_output": { "id": "not_null" },
+          "visible_to_candidate": true,
+          "points": 10
+        },
+        {
+          "id": "tc-002",
+          "type": "hidden",
+          "name": "Null entity throws",
+          "input": { "code": "repo.Add(null)" },
+          "expected_output": { "exception": "ArgumentNullException" },
+          "visible_to_candidate": false,
+          "points": 20
+        }
+      ],
+      
+      "evaluation": {
+        "time_limit_ms": 2000,
+        "memory_limit_mb": 256,
+        "partial_credit": true
+      }
+    },
+    {
+      "external_id": "HP-CS-002",
+      "title": "Async/Await Deadlock Scenario",
+      "difficulty": "advanced",
+      "language": "csharp",
+      "topics": ["async-await", "deadlock", "task"],
+      "problem_statement": { "markdown": "Fix the deadlock in the following code..." }
+    }
+  ]
+}
+```
+
+Sample SQL course bundle:
+```json
+{
+  "bundle_version": "1.0",
+  "course": {
+    "code": "SQL_DB",
+    "name": "SQL & Databases",
+    "languages": ["sql"]
+  },
+  "questions": [
+    {
+      "external_id": "HP-SQL-001",
+      "title": "Find Nth Highest Salary",
+      "difficulty": "medium",
+      "language": "sql",
+      "topics": ["joins", "subqueries", "ranking"],
+      "problem_statement": { "markdown": "Write a query to find the Nth highest salary..." },
+      "test_cases": [
+        { "id": "tc-001", "type": "sample", "input": { "n": 2 }, "expected_output": "85000" },
+        { "id": "tc-002", "type": "hidden", "input": { "n": 1 }, "expected_output": "120000" }
+      ]
+    }
+  ]
+}
+```
+
+---
+
+## 🔄 Core System Workflows
+
+### Workflow: Question Import → Live Interview → Scoring
+
+```
+┌──────────────────────────────────────────────────────────────────────┐
+│                     END-TO-END QUESTION FLOW                          │
+├──────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  CLIENT (React)                                                       │
+│  ┌─────────────────────────────────────────┐                         │
+│  │ Upload questions.json per course        │                         │
+│  │  • Course: C# & .NET                    │                         │
+│  │  • Language: csharp                     │                         │
+│  │  • Difficulty: basic/medium/advanced    │                         │
+│  │  • Test cases: sample + hidden          │                         │
+│  └────────────────┬────────────────────────┘                         │
+│                   │                                                   │
+│                   ▼                                                   │
+│  IMPORT PIPELINE (ASP.NET Core + Hangfire)                            │
+│  ┌─────────────────────────────────────────┐                         │
+│  │ 1. Parse JSON                            │                         │
+│  │ 2. Validate schema                       │                         │
+│  │ 3. Verify solution vs test cases         │                         │
+│  │ 4. Store in requirement_questions        │                         │
+│  │    + requirement_test_cases              │                         │
+│  └────────────────┬────────────────────────┘                         │
+│                   │                                                   │
+│                   ▼                                                   │
+│  INTERVIEWER (React)                                                  │
+│  ┌─────────────────────────────────────────┐                         │
+│  │ Filter: Course + Language + Difficulty   │                         │
+│  │ Select question → push to session        │                         │
+│  └────────────────┬────────────────────────┘                         │
+│                   │                                                   │
+│                   ▼                                                   │
+│  CANDIDATE (React)                                                    │
+│  ┌─────────────────────────────────────────┐                         │
+│  │ See problem + starter code (language)   │                         │
+│  │ Write code → Run → sample tests         │                         │
+│  │ Submit → hidden tests                   │                         │
+│  └────────────────┬────────────────────────┘                         │
+│                   │                                                   │
+│                   ▼                                                   │
+│  SANDBOX (Docker/K8s)                                                 │
+│  ┌─────────────────────────────────────────┐                         │
+│  │ Execute code in isolated container       │                         │
+│  │ Run all test cases                       │                         │
+│  │ Compute score (partial credit)           │                         │
+│  │ Stream results back via SignalR          │                         │
+│  └────────────────┬────────────────────────┘                         │
+│                   │                                                   │
+│                   ▼                                                   │
+│  INTERVIEWER SEES SCORE → Submits feedback                            │
+│                                                                       │
+└──────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
 ## 🔐 Security & Compliance
 
-### Authentication & Authorization
-- **OAuth 2.0 / OIDC** with Azure AD / Okta
-- **JWT tokens** with short expiry + refresh
-- **Role-Based Access Control (RBAC)**
-  - `super_admin`: Full platform access
-  - `client_admin`: Manage own organization
-  - `interviewer`: Conduct interviews
-  - `candidate`: Attend interviews only
-
-### Data Protection
-- **Encryption at rest**: AES-256 for DB and storage
-- **Encryption in transit**: TLS 1.3
-- **PII handling**: GDPR/CCPA compliant
+- **Authentication**: OAuth 2.0 / OIDC with Azure AD / Okta
+- **RBAC**: `super_admin`, `client_admin`, `interviewer`, `candidate`
+- **Encryption**: AES-256 at rest, TLS 1.3 in transit
+- **Code Sandbox**: Isolated containers, no network, strict resource limits
+- **Data isolation**: Schema-per-tenant, questions never cross clients
 - **Recording consent**: Explicit candidate acknowledgment
-- **Data retention**: Configurable per client
-
-### Code Sandbox Security
-- Isolated containers (no network access)
-- CPU/Memory/Time limits
-- Read-only filesystem
-- Automatic cleanup after execution
-- Rate limiting per user
+- **GDPR/CCPA**: Data retention configurable per client
 
 ---
 
 ## 🚀 Deployment Architecture
 
 ### Environments
-
-| Environment | Purpose | Scale |
-|-------------|---------|-------|
-| Development | Local dev | Docker Compose |
-| Staging | Pre-production testing | 2 nodes |
-| Production | Live traffic | Auto-scaling (3-20 nodes) |
+| Environment | DB | Video Storage | SignalR |
+|-------------|-----|--------------|---------|
+| Development | Local Docker | Local MinIO | Local |
+| Staging | Small RDS | S3 dev bucket | Dev Azure SignalR |
+| Production | HA RDS Multi-AZ | S3 prod (versioned) | Prod Azure SignalR |
 
 ### High Availability
-
 ```
-                    ┌─────────────┐
-                    │   Route 53  │
-                    │   / Azure   │
-                    │   Traffic   │
-                    │   Manager   │
-                    └──────┬──────┘
-                           │
-              ┌────────────┼────────────┐
-              │            │            │
-        ┌─────▼─────┐ ┌────▼────┐ ┌────▼────┐
-        │  Region   │ │ Region  │ │ Region  │
-        │   US-East │ │ EU-West │ │ AP-South│
-        └─────┬─────┘ └────┬────┘ └────┬────┘
-              │            │            │
-        ┌─────▼────────────▼────────────▼─────┐
-        │         Kubernetes Cluster          │
-        │  ┌─────────────────────────────┐    │
-        │  │  API Pods (3-10 replicas)   │    │
-        │  │  SignalR Pods (2-5)         │    │
-        │  │  Worker Pods (2-8)          │    │
-        │  └─────────────────────────────┘    │
-        └─────────────────────────────────────┘
+Route 53 / Traffic Manager
+    │
+    ├── Region US-East ─┐
+    ├── Region EU-West ─┼── Kubernetes Cluster (3-20 nodes)
+    └── Region AP-South ┘
+            ├── API Pods (3-10)
+            ├── SignalR Pods (2-5)
+            ├── Worker Pods (2-8)
+            └── Sandbox Pods (auto-scale)
 ```
 
 ---
 
-## 📈 Scalability Considerations
+## 📈 Scalability Targets
 
-### Horizontal Scaling
-- **API**: Stateless, scale via K8s HPA
-- **SignalR**: Azure SignalR Service (no sticky sessions)
-- **Media**: LiveKit supports multi-node SFU clustering
-- **Database**: Read replicas + connection pooling
-- **Cache**: Redis Cluster mode
-
-### Performance Targets
 | Metric | Target |
 |--------|--------|
-| API Response Time (p95) | < 200ms |
+| API Response (p95) | < 200ms |
 | Video Latency | < 150ms |
 | Code Execution | < 5s |
 | Concurrent Interviews | 10,000+ |
 | Recording Availability | < 2 min post-interview |
-
----
-
-## 🧪 Testing Strategy
-
-| Layer | Tools | Coverage |
-|-------|-------|----------|
-| Unit Tests | xUnit, Jest | > 80% |
-| Integration | Testcontainers | Critical paths |
-| E2E | Playwright | User workflows |
-| Load | k6, JMeter | 10k concurrent |
-| Security | OWASP ZAP | All endpoints |
+| Question Filter Query | < 50ms |
 
 ---
 
 ## 📅 Development Roadmap
 
 ### Phase 1: Foundation (Months 1-3)
-- [ ] User authentication & RBAC
-- [ ] Basic scheduling system
-- [ ] Question bank CRUD
-- [ ] Static feedback forms
+- [ ] User auth & RBAC
+- [ ] Requirements + Courses CRUD
+- [ ] Question import (JSON only)
+- [ ] Basic scheduling
 
 ### Phase 2: Real-Time (Months 4-6)
-- [ ] WebRTC video/audio integration
-- [ ] SignalR code synchronization
-- [ ] Code sandbox execution
-- [ ] Session recording
+- [ ] WebRTC video/audio
+- [ ] SignalR code sync
+- [ ] Code sandbox (C#, SQL, Python, JS)
+- [ ] Sample test case execution
 
-### Phase 3: Enterprise (Months 7-9)
+### Phase 3: Question Intelligence (Months 7-9)
+- [ ] Multi-format import (YAML, Excel)
+- [ ] Hidden test cases + scoring
+- [ ] Question picker with filters (course/language/difficulty)
 - [ ] Dynamic feedback templates
-- [ ] Client-specific configurations
-- [ ] Analytics dashboard
-- [ ] SSO integration
 
 ### Phase 4: Scale (Months 10-12)
 - [ ] Multi-region deployment
 - [ ] Advanced monitoring
 - [ ] AI-powered question suggestions
-- [ ] Compliance certifications (SOC 2, ISO 27001)
+- [ ] SOC 2 / ISO 27001 certification
 
 ---
 
-## 📚 API Documentation (Sample)
+## 📚 Sample API Endpoints
 
-### Create Interview
-```http
-POST /api/v1/interviews
-Authorization: Bearer {token}
-Content-Type: application/json
-
-{
-  "requirementId": "req_123",
-  "candidateId": "cand_456",
-  "interviewerId": "int_789",
-  "scheduledAt": "2024-12-15T10:00:00Z",
-  "duration": 60,
-  "questionIds": ["q_1", "q_2", "q_3"]
-}
+### Question Management
+```
+POST   /api/v1/requirements/{id}/courses
+POST   /api/v1/requirements/{id}/courses/{courseId}/questions/import
+POST   /api/v1/requirements/{id}/courses/{courseId}/questions/import/preview
+GET    /api/v1/requirements/{id}/questions
+         ?course=CSHARP_DOTNET&language=csharp&difficulty=medium,advanced
+GET    /api/v1/requirements/{id}/questions/{qid}
+PUT    /api/v1/requirements/{id}/questions/{qid}
+DELETE /api/v1/requirements/{id}/questions/{qid}
 ```
 
-### Submit Feedback
-```http
-POST /api/v1/interviews/{id}/feedback
-Authorization: Bearer {token}
-Content-Type: application/json
+### Interview Session
+```
+POST   /api/v1/interviews/{id}/select-question   { questionId }
+POST   /api/v1/interviews/{id}/code/run          { code, language }
+POST   /api/v1/interviews/{id}/code/submit       { code, language }
+GET    /api/v1/interviews/{id}/test-results
+POST   /api/v1/interviews/{id}/feedback
+```
 
+### Example: Filter Questions During Interview
+```http
+GET /api/v1/requirements/req_abc123/questions
+    ?course=CSHARP_DOTNET
+    &language=csharp
+    &difficulty=medium,advanced
+    &topics=linq,async
+Authorization: Bearer {token}
+
+Response:
 {
-  "templateId": "devops_senior_001",
-  "responses": {
-    "harness_proficiency": 4,
-    "devops_fundamentals": 5,
-    "system_design": "Strong understanding of microservices..."
-  },
-  "recommendation": "HIRE",
-  "overallRating": 4.5
+  "total": 23,
+  "questions": [
+    {
+      "id": "q_001",
+      "title": "Implement Repository Pattern",
+      "course": "C# & .NET",
+      "language": "csharp",
+      "difficulty": "medium",
+      "topics": ["design-patterns", "ef-core"],
+      "estimatedMinutes": 20,
+      "testCaseCount": 10
+    },
+    ...
+  ]
 }
 ```
 
@@ -599,10 +779,9 @@ Content-Type: application/json
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open Pull Request
+2. Create feature branch (`git checkout -b feature/question-import`)
+3. Commit changes
+4. Open Pull Request
 
 ---
 
@@ -612,12 +791,13 @@ Copyright © 2024 InterviewHub. All rights reserved.
 
 ---
 
-## 📞 Support
-
-- **Documentation**: [docs.interviewhub.com](https://docs.interviewhub.com)
-- **Support**: support@interviewhub.com
-- **Status**: [status.interviewhub.com](https://status.interviewhub.com)
-
----
-
 *Last Updated: December 2024*
+
+**Summary of what changed in this version:**
+- ✅ Added explicit **Question Taxonomy** (Difficulty × Course × Language × Topics)
+- ✅ Added `language` and `topics` columns to `requirement_questions`
+- ✅ Added `languages[]` to `requirement_courses` for multi-language courses
+- ✅ Included **C#, .NET, SQL** as concrete examples throughout
+- ✅ Added Question Picker workflow with **course + language + difficulty** filters
+- ✅ Candidate editor shows **language-specific** code with sample/hidden test cases
+- ✅ Import JSON now includes `language` per question
