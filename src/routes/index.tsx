@@ -487,31 +487,84 @@ function Index() {
           </div>
         </section>
 
-        <section id="pricing" className="container-fluid pb-4 pt-2">
-          <div className="rounded-3xl border border-glass-border bg-glass p-6 text-center shadow-ai-soft backdrop-blur-xl sm:p-8">
-            <h2 className="font-display text-2xl font-bold tracking-normal">Start with free practice</h2>
+        <section id="get-started" className="container-fluid py-10">
+          <div className="text-center">
+            <h2 className="font-display text-3xl font-bold tracking-normal">Get started</h2>
             <p className="mx-auto mt-2 max-w-xl text-sm text-soft-ink">
-              Explore the question library first. Add paid plans later when you are ready to offer progress tracking, saved answers, and team preparation.
+              Choose the track that fits you — a company upskilling a team, or one developer preparing for the next interview.
             </p>
-            <Button asChild variant="hero" size="hero" className="mt-5">
-              <a href="#questions">Browse questions</a>
-            </Button>
+          </div>
+          <div className="mt-8 grid gap-6 lg:grid-cols-2">
+            {tracks.map((track) => (
+              <article
+                key={track.title}
+                className="flex flex-col rounded-3xl border border-glass-border bg-glass p-6 shadow-ai-card backdrop-blur-xl sm:p-8"
+              >
+                <div className="flex items-center gap-3">
+                  <span className={`grid size-11 place-items-center rounded-2xl ${track.tone}`}>
+                    <track.icon aria-hidden="true" />
+                  </span>
+                  <div>
+                    <h3 className="font-display text-xl font-bold tracking-normal">{track.title}</h3>
+                    <p className="text-sm text-soft-ink">{track.subtitle}</p>
+                  </div>
+                </div>
+                <ul className="mt-5 grid gap-2 text-sm text-soft-ink">
+                  {track.points.map((point) => (
+                    <li key={point} className="flex items-start gap-2">
+                      <Check className="mt-0.5 size-4 shrink-0 text-success" aria-hidden="true" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-5 text-sm font-semibold">{track.price}</p>
+                <Button asChild variant={track.primary ? "hero" : "glass"} size="hero" className="mt-5">
+                  <Link to={track.ctaTo}>
+                    {track.cta} <ArrowRight aria-hidden="true" />
+                  </Link>
+                </Button>
+              </article>
+            ))}
+          </div>
+
+          <div className="mt-8 rounded-3xl border border-glass-border bg-glass p-6 shadow-ai-soft backdrop-blur-xl sm:p-8">
+            <div className="flex items-center gap-3">
+              <Workflow className="text-ai-accent" aria-hidden="true" />
+              <h3 className="font-display text-2xl font-bold tracking-normal">How onboarding works</h3>
+            </div>
+            <ol className="mt-6 grid gap-4 md:grid-cols-5">
+              {workflow.map((stage, index) => (
+                <li
+                  key={stage.title}
+                  className="relative rounded-2xl border border-glass-border bg-glass-strong p-5"
+                >
+                  <span className="grid size-9 place-items-center rounded-xl bg-ai-gradient font-display font-bold text-brand-foreground">
+                    {index + 1}
+                  </span>
+                  <h4 className="mt-3 font-display font-semibold">{stage.title}</h4>
+                  <p className="mt-1 text-sm text-soft-ink">{stage.description}</p>
+                </li>
+              ))}
+            </ol>
           </div>
         </section>
 
       </main>
 
-      <footer className="container-fluid relative z-10 flex flex-col items-center gap-2 py-10 text-center text-sm text-soft-ink sm:flex-row sm:justify-between sm:text-left">
+      <footer className="container-fluid relative z-10 flex flex-col items-center gap-3 py-10 text-center text-sm text-soft-ink sm:flex-row sm:justify-between sm:text-left">
         <span>InterviewEasy — practice smarter, not harder. © 2026</span>
-        <span className="text-faint-ink">
-          Technology partner{" "}
+        <span className="flex flex-wrap items-center justify-center gap-4">
+          <Link to="/careers" className="font-medium transition-colors hover:text-brand">
+            Careers
+          </Link>
+          <Link to="/contact" className="font-medium transition-colors hover:text-brand">
+            Contact
+          </Link>
           <a
-            href="https://betalen.in"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-semibold text-brand transition-colors hover:text-ai-accent"
+            href="mailto:careers@intervieweasy.in"
+            className="font-medium text-brand transition-colors hover:text-ai-accent"
           >
-            BetaLen AI
+            careers@intervieweasy.in
           </a>
         </span>
       </footer>
