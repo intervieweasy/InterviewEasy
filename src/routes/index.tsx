@@ -1,22 +1,68 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   ArrowRight,
   BookOpen,
   BrainCircuit,
   Braces,
+  Building2,
+  Check,
   ChevronLeft,
   ChevronRight,
   Cloud,
   Code2,
   CreditCard,
-  ExternalLink,
   Database,
   Layers3,
   Play,
   Search,
   Sparkles,
+  UserRound,
+  Workflow,
 } from "lucide-react";
+
+const tracks = [
+  {
+    icon: Building2,
+    title: "Corporate training",
+    subtitle: "For teams and hiring managers",
+    tone: "bg-brand-soft text-brand",
+    price: "Custom quote per cohort",
+    primary: true,
+    cta: "Talk to us",
+    ctaTo: "/contact",
+    points: [
+      "Skill assessment for the whole team before the programme starts",
+      "Curriculum built from your stack: .NET, JavaScript, cloud, DevOps",
+      "Live trainer sessions plus recorded walkthroughs",
+      "Mock interview panels and a manager progress dashboard",
+    ],
+  },
+  {
+    icon: UserRound,
+    title: "Individual",
+    subtitle: "For developers preparing on their own",
+    tone: "bg-ai-accent-soft text-ai-accent",
+    price: "Free to start, upgrade any time",
+    primary: false,
+    cta: "Start practicing",
+    ctaTo: "/",
+    points: [
+      "Full question library with explanations, videos, and examples",
+      "Pick a topic path and practise at your own pace",
+      "Daily practice sets and bookmarked answers",
+      "Interview-day checklists for each technology",
+    ],
+  },
+] as const;
+
+const workflow = [
+  { title: "Tell us your goal", description: "Choose corporate training or individual practice." },
+  { title: "Skill check", description: "A short assessment shows your current level." },
+  { title: "Your plan", description: "We map topics and a weekly schedule." },
+  { title: "Learn and practise", description: "Explanations, videos, and hands-on examples." },
+  { title: "Mock interviews", description: "Feedback rounds until you are interview ready." },
+];
 
 import { Button } from "@/components/ui/button";
 
@@ -251,13 +297,19 @@ function Index() {
             <a href="#roadmap" className="transition-colors hover:text-brand">
               Roadmaps
             </a>
+            <Link to="/careers" className="transition-colors hover:text-brand">
+              Careers
+            </Link>
+            <Link to="/contact" className="transition-colors hover:text-brand">
+              Contact
+            </Link>
           </div>
           <div className="flex items-center gap-3">
             <a className="hidden text-sm font-medium text-soft-ink hover:text-brand sm:inline" href="#questions">
               Sign in
             </a>
             <Button asChild variant="hero" size="sm" className="rounded-xl px-4 py-2">
-              <a href="#questions">Get started</a>
+              <a href="#get-started">Get started</a>
             </Button>
           </div>
         </nav>
@@ -487,63 +539,84 @@ function Index() {
           </div>
         </section>
 
-        <section id="pricing" className="container-fluid pb-4 pt-2">
-          <div className="rounded-3xl border border-glass-border bg-glass p-6 text-center shadow-ai-soft backdrop-blur-xl sm:p-8">
-            <h2 className="font-display text-2xl font-bold tracking-normal">Start with free practice</h2>
+        <section id="get-started" className="container-fluid py-10">
+          <div className="text-center">
+            <h2 className="font-display text-3xl font-bold tracking-normal">Get started</h2>
             <p className="mx-auto mt-2 max-w-xl text-sm text-soft-ink">
-              Explore the question library first. Add paid plans later when you are ready to offer progress tracking, saved answers, and team preparation.
+              Choose the track that fits you — a company upskilling a team, or one developer preparing for the next interview.
             </p>
-            <Button asChild variant="hero" size="hero" className="mt-5">
-              <a href="#questions">Browse questions</a>
-            </Button>
+          </div>
+          <div className="mt-8 grid gap-6 lg:grid-cols-2">
+            {tracks.map((track) => (
+              <article
+                key={track.title}
+                className="flex flex-col rounded-3xl border border-glass-border bg-glass p-6 shadow-ai-card backdrop-blur-xl sm:p-8"
+              >
+                <div className="flex items-center gap-3">
+                  <span className={`grid size-11 place-items-center rounded-2xl ${track.tone}`}>
+                    <track.icon aria-hidden="true" />
+                  </span>
+                  <div>
+                    <h3 className="font-display text-xl font-bold tracking-normal">{track.title}</h3>
+                    <p className="text-sm text-soft-ink">{track.subtitle}</p>
+                  </div>
+                </div>
+                <ul className="mt-5 grid gap-2 text-sm text-soft-ink">
+                  {track.points.map((point) => (
+                    <li key={point} className="flex items-start gap-2">
+                      <Check className="mt-0.5 size-4 shrink-0 text-success" aria-hidden="true" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-5 text-sm font-semibold">{track.price}</p>
+                <Button asChild variant={track.primary ? "hero" : "glass"} size="hero" className="mt-5">
+                  <Link to={track.ctaTo}>
+                    {track.cta} <ArrowRight aria-hidden="true" />
+                  </Link>
+                </Button>
+              </article>
+            ))}
+          </div>
+
+          <div className="mt-8 rounded-3xl border border-glass-border bg-glass p-6 shadow-ai-soft backdrop-blur-xl sm:p-8">
+            <div className="flex items-center gap-3">
+              <Workflow className="text-ai-accent" aria-hidden="true" />
+              <h3 className="font-display text-2xl font-bold tracking-normal">How onboarding works</h3>
+            </div>
+            <ol className="mt-6 grid gap-4 md:grid-cols-5">
+              {workflow.map((stage, index) => (
+                <li
+                  key={stage.title}
+                  className="relative rounded-2xl border border-glass-border bg-glass-strong p-5"
+                >
+                  <span className="grid size-9 place-items-center rounded-xl bg-ai-gradient font-display font-bold text-brand-foreground">
+                    {index + 1}
+                  </span>
+                  <h4 className="mt-3 font-display font-semibold">{stage.title}</h4>
+                  <p className="mt-1 text-sm text-soft-ink">{stage.description}</p>
+                </li>
+              ))}
+            </ol>
           </div>
         </section>
 
-        <section id="partners" className="container-fluid pb-6 pt-4">
-          <div className="rounded-3xl border border-glass-border bg-glass p-6 shadow-ai-soft backdrop-blur-xl sm:p-8">
-            <p className="text-center text-xs font-semibold uppercase tracking-[0.22em] text-faint-ink">
-              Technology partner
-            </p>
-            <div className="mt-5 flex flex-col items-center gap-6 sm:flex-row sm:justify-between">
-              <a
-                href="https://betalen.in"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-col items-center gap-4 text-center sm:flex-row sm:text-left"
-              >
-                <span className="grid size-14 shrink-0 place-items-center rounded-2xl bg-ai-gradient font-display text-2xl font-bold text-brand-foreground shadow-ai-soft">
-                  B
-                </span>
-                <span>
-                  <span className="block font-display text-2xl font-bold tracking-normal">
-                    BetaLen <span className="text-ai-gradient">AI</span>
-                  </span>
-                  <span className="mt-1 block text-sm text-soft-ink">
-                    AI and technology partner powering Interview Easy.
-                  </span>
-                </span>
-              </a>
-              <Button asChild variant="glass" size="hero" className="shrink-0">
-                <a href="https://betalen.in" target="_blank" rel="noopener noreferrer">
-                  betalen.in <ExternalLink aria-hidden="true" />
-                </a>
-              </Button>
-            </div>
-          </div>
-        </section>
       </main>
 
-      <footer className="container-fluid relative z-10 flex flex-col items-center gap-2 py-10 text-center text-sm text-soft-ink sm:flex-row sm:justify-between sm:text-left">
+      <footer className="container-fluid relative z-10 flex flex-col items-center gap-3 py-10 text-center text-sm text-soft-ink sm:flex-row sm:justify-between sm:text-left">
         <span>InterviewEasy — practice smarter, not harder. © 2026</span>
-        <span className="text-faint-ink">
-          Technology partner{" "}
+        <span className="flex flex-wrap items-center justify-center gap-4">
+          <Link to="/careers" className="font-medium transition-colors hover:text-brand">
+            Careers
+          </Link>
+          <Link to="/contact" className="font-medium transition-colors hover:text-brand">
+            Contact
+          </Link>
           <a
-            href="https://betalen.in"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-semibold text-brand transition-colors hover:text-ai-accent"
+            href="mailto:careers@intervieweasy.in"
+            className="font-medium text-brand transition-colors hover:text-ai-accent"
           >
-            BetaLen AI
+            careers@intervieweasy.in
           </a>
         </span>
       </footer>
