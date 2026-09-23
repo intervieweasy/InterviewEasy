@@ -499,38 +499,6 @@ function Index() {
           </div>
         </section>
 
-        <section id="partners" className="container-fluid pb-6 pt-4">
-          <div className="rounded-3xl border border-glass-border bg-glass p-6 shadow-ai-soft backdrop-blur-xl sm:p-8">
-            <p className="text-center text-xs font-semibold uppercase tracking-[0.22em] text-faint-ink">
-              Technology partner
-            </p>
-            <div className="mt-5 flex flex-col items-center gap-6 sm:flex-row sm:justify-between">
-              <a
-                href="https://betalen.in"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-col items-center gap-4 text-center sm:flex-row sm:text-left"
-              >
-                <span className="grid size-14 shrink-0 place-items-center rounded-2xl bg-ai-gradient font-display text-2xl font-bold text-brand-foreground shadow-ai-soft">
-                  B
-                </span>
-                <span>
-                  <span className="block font-display text-2xl font-bold tracking-normal">
-                    BetaLen <span className="text-ai-gradient">AI</span>
-                  </span>
-                  <span className="mt-1 block text-sm text-soft-ink">
-                    AI and technology partner powering Interview Easy.
-                  </span>
-                </span>
-              </a>
-              <Button asChild variant="glass" size="hero" className="shrink-0">
-                <a href="https://betalen.in" target="_blank" rel="noopener noreferrer">
-                  betalen.in <ExternalLink aria-hidden="true" />
-                </a>
-              </Button>
-            </div>
-          </div>
-        </section>
       </main>
 
       <footer className="container-fluid relative z-10 flex flex-col items-center gap-2 py-10 text-center text-sm text-soft-ink sm:flex-row sm:justify-between sm:text-left">
