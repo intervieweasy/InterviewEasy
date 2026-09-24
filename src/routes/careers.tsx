@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Clock, Globe2, Mail } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { SiteHeader } from "@/components/site-header";
 
 export const Route = createFileRoute("/careers")({
   head: () => ({
@@ -11,6 +12,10 @@ export const Route = createFileRoute("/careers")({
         name: "description",
         content:
           "Ten remote openings at Interview Easy paying from $10 per hour: .NET, JavaScript, Angular, React, AWS, Azure, Docker, Kubernetes and more.",
+      },
+      {
+        name: "keywords",
+        content: "Interview Easy careers, remote developer jobs, .NET jobs, React jobs, Angular jobs, cloud jobs",
       },
       { property: "og:title", content: "Careers at Interview Easy — Remote developer roles" },
       {
@@ -119,26 +124,7 @@ const jobs: Job[] = [
 function CareersPage() {
   return (
     <div className="min-h-screen bg-cloud-gradient">
-      <header className="container-fluid pt-6">
-        <nav className="flex items-center justify-between rounded-2xl border border-glass-border bg-glass px-4 py-3 shadow-ai-soft backdrop-blur-xl sm:px-5">
-          <Link to="/" className="flex items-center gap-2">
-            <span className="grid size-9 place-items-center rounded-xl bg-ai-gradient font-display text-lg font-bold text-brand-foreground">
-              I
-            </span>
-            <span className="font-display text-lg font-bold tracking-tight">
-              Interview<span className="text-brand">Easy</span>
-            </span>
-          </Link>
-          <div className="flex items-center gap-4 text-sm font-medium text-soft-ink">
-            <Link to="/contact" className="transition-colors hover:text-brand">
-              Contact
-            </Link>
-            <Button asChild variant="hero" size="sm" className="rounded-xl px-4 py-2">
-              <a href="mailto:careers@intervieweasy.in">Apply now</a>
-            </Button>
-          </div>
-        </nav>
-      </header>
+      <SiteHeader />
 
       <main className="container-fluid py-12">
         <section className="max-w-2xl">
