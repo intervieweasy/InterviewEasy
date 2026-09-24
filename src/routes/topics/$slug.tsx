@@ -59,8 +59,12 @@ function TopicPage() {
           </h1>
           <p className="mt-5 max-w-2xl text-lg text-soft-ink">{topic.description}</p>
           <div className="mt-7 flex flex-wrap gap-3">
-            <Button variant="hero" size="hero"><Search aria-hidden="true" /> Browse questions</Button>
-            <Button variant="glass" size="hero"><Play aria-hidden="true" /> Watch lessons</Button>
+            <Button asChild variant="hero" size="hero">
+              <Link to="/" hash="questions"><Search aria-hidden="true" /> Browse questions</Link>
+            </Button>
+            <Button asChild variant="glass" size="hero">
+              <Link to="/" hash="practice"><Play aria-hidden="true" /> Watch lessons</Link>
+            </Button>
           </div>
         </section>
 
