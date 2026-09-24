@@ -2,18 +2,13 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   ArrowRight,
+  ArrowUpRight,
   BookOpen,
-  BrainCircuit,
-  Braces,
   Building2,
   Check,
   ChevronLeft,
   ChevronRight,
-  Cloud,
   Code2,
-  CreditCard,
-  Database,
-  Layers3,
   Play,
   Search,
   Sparkles,
@@ -65,6 +60,8 @@ const workflow = [
 ];
 
 import { Button } from "@/components/ui/button";
+import { SiteHeader } from "@/components/site-header";
+import { menuGroups } from "@/lib/topics";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -74,6 +71,11 @@ export const Route = createFileRoute("/")({
         name: "description",
         content:
           "Prepare for .NET, JavaScript, database, Azure, AI, and integration interviews with searchable questions, explanations, videos, examples, and practice prompts.",
+      },
+      {
+        name: "keywords",
+        content:
+          "developer interview questions, .NET interview questions, JavaScript interview questions, Azure interview questions, coding practice, interview videos",
       },
       {
         property: "og:title",
@@ -115,102 +117,6 @@ const topics = [
     title: "AI & Integrations",
     description: "AI, payments, SAP, Salesforce and messaging",
     count: "12 topic areas",
-  },
-];
-
-const menuGroups = [
-  {
-    title: ".NET Menu",
-    description: "Microsoft developer interview questions and examples.",
-    Icon: Layers3,
-    tone: "bg-brand-soft text-brand",
-    items: [
-      "C#",
-      "ASP.NET",
-      "ASP.NET MVC",
-      "ASP.NET Web API",
-      "ASP.NET Core",
-      "ASP.NET Core Web API",
-      "ADO.NET",
-      "Entity Framework",
-      "LINQ",
-      "NHibernate",
-      "Fluent NHibernate",
-      "Windows Forms",
-      "WPF (ERP)",
-      "Web Services, WCF, etc.",
-    ],
-  },
-  {
-    title: "JavaScript Menu",
-    description: "Frontend and runtime topics for modern web roles.",
-    Icon: Braces,
-    tone: "bg-ai-accent-soft text-ai-accent",
-    items: [
-      "JavaScript",
-      "jQuery",
-      "AngularJS",
-      "Angular",
-      "React",
-      "TypeScript",
-      "Vue.js",
-      "Node.js",
-      "Python",
-    ],
-  },
-  {
-    title: "Database Menu",
-    description: "Database concepts, queries, design, and performance.",
-    Icon: Database,
-    tone: "bg-success-soft text-success",
-    items: ["SQL Server", "MongoDB", "RavenDB", "Cosmos DB", "SQLite", "PostgreSQL"],
-  },
-  {
-    title: "Azure Menu",
-    description: "Cloud, deployment, DevOps, and production services.",
-    Icon: Cloud,
-    tone: "bg-brand-soft text-brand",
-    items: [
-      "Azure",
-      "Azure DevOps",
-      "CI/CD Pipeline",
-      "Kubernetes",
-      "Docker",
-      "App Services",
-      "Logic Apps",
-      "Service Bus",
-      "Storage Accounts",
-      "Application Insights",
-      "Hangfire",
-      "Azure Functions",
-      "SignalR",
-    ],
-  },
-  {
-    title: "AI Menu",
-    description: "Interview topics for current AI-powered development.",
-    Icon: BrainCircuit,
-    tone: "bg-ai-accent-soft text-ai-accent",
-    items: ["AI Fundamentals", "Generative AI", "Prompt Engineering", "Chatbots", "Model APIs", "AI App Design"],
-  },
-  {
-    title: "Integrations Menu",
-    description: "Payment, enterprise, and communication integrations.",
-    Icon: CreditCard,
-    tone: "bg-success-soft text-success",
-    items: [
-      "Payment Gateways",
-      "Paytm",
-      "PayPal",
-      "CCAvenue",
-      "Razorpay",
-      "SAP Function Modules",
-      "Salesforce Functions",
-      "Salesforce Data Extensions",
-      "SMS Integration",
-      "WhatsApp Integration",
-      "Email Integration",
-    ],
   },
 ];
 
@@ -274,46 +180,7 @@ function Index() {
       <div className="pointer-events-none absolute -right-24 top-1/3 size-[420px] rounded-full bg-ai-accent-soft blur-[120px]" />
       <div className="pointer-events-none absolute bottom-0 left-1/3 size-[360px] rounded-full bg-cloud-cool blur-[120px]" />
 
-      <header className="container-fluid relative z-20 pt-5 sm:pt-6">
-        <nav className="flex items-center justify-between rounded-2xl border border-glass-border bg-glass px-4 py-3 shadow-ai-soft backdrop-blur-xl sm:px-5">
-          <a href="#top" className="flex items-center gap-2" aria-label="Interview Easy home">
-            <span className="grid size-9 place-items-center rounded-xl bg-ai-gradient font-display text-lg font-bold text-brand-foreground">
-              I
-            </span>
-            <span className="font-display text-lg font-bold tracking-tight">
-              Interview<span className="text-brand">Easy</span>
-            </span>
-          </a>
-          <div className="hidden items-center gap-7 text-sm font-medium text-soft-ink md:flex">
-            <a href="#questions" className="transition-colors hover:text-brand">
-              Questions
-            </a>
-            <a href="#practice" className="transition-colors hover:text-brand">
-              Practice
-            </a>
-            <a href="#topic-menu" className="transition-colors hover:text-brand">
-              Menu
-            </a>
-            <a href="#roadmap" className="transition-colors hover:text-brand">
-              Roadmaps
-            </a>
-            <Link to="/careers" className="transition-colors hover:text-brand">
-              Careers
-            </Link>
-            <Link to="/contact" className="transition-colors hover:text-brand">
-              Contact
-            </Link>
-          </div>
-          <div className="flex items-center gap-3">
-            <a className="hidden text-sm font-medium text-soft-ink hover:text-brand sm:inline" href="#questions">
-              Sign in
-            </a>
-            <Button asChild variant="hero" size="sm" className="rounded-xl px-4 py-2">
-              <a href="#get-started">Get started</a>
-            </Button>
-          </div>
-        </nav>
-      </header>
+      <SiteHeader />
 
       <main id="top" className="relative z-10">
         <section className="container-fluid grid items-center gap-12 pb-10 pt-14 lg:grid-cols-2">
@@ -450,29 +317,35 @@ function Index() {
             </p>
           </div>
           <div className="grid gap-4 lg:grid-cols-2">
-            {menuGroups.map(({ title, description, Icon, tone, items }) => (
+            {menuGroups.map(({ title, description, Icon, tone, topics: groupTopics }) => (
               <article
                 key={title}
-                className="rounded-3xl border border-glass-border bg-glass p-5 shadow-ai-soft backdrop-blur-xl sm:p-6"
+                className="overflow-hidden rounded-2xl border border-glass-border bg-glass shadow-ai-soft backdrop-blur-xl"
               >
-                <div className="flex items-start gap-3">
+                <div className="flex items-start gap-3 border-b border-glass-border p-5 sm:p-6">
                   <div className={`inline-flex size-11 shrink-0 items-center justify-center rounded-xl ${tone}`}>
                     <Icon aria-hidden="true" />
                   </div>
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <h3 className="font-display text-xl font-semibold tracking-normal">{title}</h3>
                     <p className="mt-1 text-sm text-soft-ink">{description}</p>
                   </div>
+                  <span className="rounded-full bg-glass-strong px-2.5 py-1 text-xs font-semibold text-faint-ink">
+                    {groupTopics.length}
+                  </span>
                 </div>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {items.map((item) => (
-                    <a
-                      key={item}
-                      href="#practice"
-                      className="rounded-full border border-glass-border bg-glass-strong px-3 py-1.5 text-sm font-medium text-soft-ink transition-colors hover:text-brand"
+                <div className="grid sm:grid-cols-2">
+                  {groupTopics.map((topic) => (
+                    <Link
+                      key={topic.slug}
+                      to="/topics/$slug"
+                      params={{ slug: topic.slug }}
+                      preload="intent"
+                      className="group flex min-h-12 items-center justify-between gap-3 border-b border-glass-border px-5 py-3 text-sm font-medium text-soft-ink transition-colors hover:bg-glass-strong hover:text-brand sm:[&:nth-child(odd)]:border-r"
                     >
-                      {item}
-                    </a>
+                      <span>{topic.name}</span>
+                      <ArrowUpRight className="size-4 shrink-0 text-faint-ink transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand" aria-hidden="true" />
+                    </Link>
                   ))}
                 </div>
               </article>

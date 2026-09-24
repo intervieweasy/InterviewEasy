@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Mail, MapPin, MessageSquare, Phone } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { SiteHeader } from "@/components/site-header";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
@@ -14,6 +15,10 @@ export const Route = createFileRoute("/contact")({
         name: "description",
         content:
           "Contact the Interview Easy team about corporate training, individual plans, careers, or partnership enquiries.",
+      },
+      {
+        name: "keywords",
+        content: "contact Interview Easy, corporate developer training, interview preparation support, developer careers",
       },
       { property: "og:title", content: "Contact Interview Easy — Talk to our team" },
       {
@@ -55,26 +60,7 @@ const channels = [
 function ContactPage() {
   return (
     <div className="min-h-screen bg-cloud-gradient">
-      <header className="container-fluid pt-6">
-        <nav className="flex items-center justify-between rounded-2xl border border-glass-border bg-glass px-4 py-3 shadow-ai-soft backdrop-blur-xl sm:px-5">
-          <Link to="/" className="flex items-center gap-2">
-            <span className="grid size-9 place-items-center rounded-xl bg-ai-gradient font-display text-lg font-bold text-brand-foreground">
-              I
-            </span>
-            <span className="font-display text-lg font-bold tracking-tight">
-              Interview<span className="text-brand">Easy</span>
-            </span>
-          </Link>
-          <div className="flex items-center gap-4 text-sm font-medium text-soft-ink">
-            <Link to="/careers" className="transition-colors hover:text-brand">
-              Careers
-            </Link>
-            <Button asChild variant="hero" size="sm" className="rounded-xl px-4 py-2">
-              <Link to="/">Back home</Link>
-            </Button>
-          </div>
-        </nav>
-      </header>
+      <SiteHeader />
 
       <main className="container-fluid grid gap-8 py-12 lg:grid-cols-[1fr_1.1fr]">
         <section>

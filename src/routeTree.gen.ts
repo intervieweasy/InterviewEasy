@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CareersRouteImport } from './routes/careers'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as TopicsSlugRouteImport } from './routes/topics/$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +29,44 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TopicsSlugRoute = TopicsSlugRouteImport.update({
+  id: '/topics/$slug',
+  path: '/topics/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
+  '/topics/$slug': typeof TopicsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
+  '/topics/$slug': typeof TopicsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
+  '/topics/$slug': typeof TopicsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/careers' | '/contact'
+  fullPaths: '/' | '/careers' | '/contact' | '/topics/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/careers' | '/contact'
-  id: '__root__' | '/' | '/careers' | '/contact'
+  to: '/' | '/careers' | '/contact' | '/topics/$slug'
+  id: '__root__' | '/' | '/careers' | '/contact' | '/topics/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CareersRoute: typeof CareersRoute
   ContactRoute: typeof ContactRoute
+  TopicsSlugRoute: typeof TopicsSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/topics/$slug': {
+      id: '/topics/$slug'
+      path: '/topics/$slug'
+      fullPath: '/topics/$slug'
+      preLoaderRoute: typeof TopicsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CareersRoute: CareersRoute,
   ContactRoute: ContactRoute,
+  TopicsSlugRoute: TopicsSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
