@@ -4,7 +4,6 @@ import {
   ArrowRight,
   ArrowUpRight,
   BookOpen,
-  Building2,
   CalendarCheck,
   ChevronLeft,
   ChevronRight,
@@ -12,7 +11,6 @@ import {
   FileBarChart,
   Play,
   Search,
-  Sparkles,
   TestTube2,
   UsersRound,
   Video,
@@ -359,7 +357,7 @@ function Index() {
         <section id="roadmap" className="container-fluid py-10">
           <div className="rounded-3xl border border-glass-border bg-glass p-6 shadow-ai-soft backdrop-blur-xl sm:p-8">
             <div className="flex items-center gap-3">
-              <Sparkles className="text-ai-accent" aria-hidden="true" />
+              <CalendarCheck className="text-ai-accent" aria-hidden="true" />
               <h2 className="font-display text-2xl font-bold tracking-normal">How it works</h2>
             </div>
             <div className="mt-6 grid gap-6 md:grid-cols-3">
@@ -376,66 +374,26 @@ function Index() {
           </div>
         </section>
 
-        <section id="get-started" className="container-fluid py-10">
-          <div className="text-center">
-            <h2 className="font-display text-3xl font-bold tracking-normal">Get started</h2>
-            <p className="mx-auto mt-2 max-w-xl text-sm text-soft-ink">
-              Choose the track that fits you — a company upskilling a team, or one developer preparing for the next interview.
-            </p>
-          </div>
-          <div className="mt-8 grid gap-6 lg:grid-cols-2">
-            {tracks.map((track) => (
-              <article
-                key={track.title}
-                className="flex flex-col rounded-3xl border border-glass-border bg-glass p-6 shadow-ai-card backdrop-blur-xl sm:p-8"
-              >
-                <div className="flex items-center gap-3">
-                  <span className={`grid size-11 place-items-center rounded-2xl ${track.tone}`}>
-                    <track.icon aria-hidden="true" />
-                  </span>
-                  <div>
-                    <h3 className="font-display text-xl font-bold tracking-normal">{track.title}</h3>
-                    <p className="text-sm text-soft-ink">{track.subtitle}</p>
-                  </div>
-                </div>
-                <ul className="mt-5 grid gap-2 text-sm text-soft-ink">
-                  {track.points.map((point) => (
-                    <li key={point} className="flex items-start gap-2">
-                      <Check className="mt-0.5 size-4 shrink-0 text-success" aria-hidden="true" />
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-5 text-sm font-semibold">{track.price}</p>
-                <Button asChild variant={track.primary ? "hero" : "glass"} size="hero" className="mt-5">
-                  <Link to={track.ctaTo}>
-                    {track.cta} <ArrowRight aria-hidden="true" />
-                  </Link>
-                </Button>
-              </article>
-            ))}
-          </div>
-
-          <div className="mt-8 rounded-3xl border border-glass-border bg-glass p-6 shadow-ai-soft backdrop-blur-xl sm:p-8">
-            <div className="flex items-center gap-3">
-              <Workflow className="text-ai-accent" aria-hidden="true" />
-              <h3 className="font-display text-2xl font-bold tracking-normal">How onboarding works</h3>
+        <section className="container-fluid py-10">
+          <div className="flex flex-col gap-4 border-b border-glass-border pb-7 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm font-semibold text-ai-accent">Complete interview flow</p>
+              <h2 className="mt-1 font-display text-3xl font-bold tracking-normal">From calendar invite to hiring decision</h2>
             </div>
-            <ol className="mt-6 grid gap-4 md:grid-cols-5">
-              {workflow.map((stage, index) => (
-                <li
-                  key={stage.title}
-                  className="relative rounded-2xl border border-glass-border bg-glass-strong p-5"
-                >
-                  <span className="grid size-9 place-items-center rounded-xl bg-ai-gradient font-display font-bold text-brand-foreground">
-                    {index + 1}
-                  </span>
-                  <h4 className="mt-3 font-display font-semibold">{stage.title}</h4>
-                  <p className="mt-1 text-sm text-soft-ink">{stage.description}</p>
-                </li>
-              ))}
-            </ol>
+            <Button asChild variant="hero" size="hero"><Link to="/demo">View product demo <ArrowRight aria-hidden="true" /></Link></Button>
           </div>
+          <ol className="grid border-b border-glass-border md:grid-cols-5">
+            {workflow.map((stage, index) => (
+              <li key={stage.title} className="border-b border-glass-border py-6 md:border-b-0 md:border-r md:px-5 md:first:pl-0 md:last:border-r-0 md:last:pr-0">
+                <div className="flex items-center justify-between">
+                  <stage.icon className="text-brand" aria-hidden="true" />
+                  <span className="text-xs font-bold text-faint-ink">0{index + 1}</span>
+                </div>
+                <h3 className="mt-4 font-display text-lg font-semibold">{stage.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-soft-ink">{stage.description}</p>
+              </li>
+            ))}
+          </ol>
         </section>
 
       </main>
