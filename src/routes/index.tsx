@@ -5,58 +5,26 @@ import {
   ArrowUpRight,
   BookOpen,
   Building2,
-  Check,
+  CalendarCheck,
   ChevronLeft,
   ChevronRight,
   Code2,
+  FileBarChart,
   Play,
   Search,
   Sparkles,
-  UserRound,
+  TestTube2,
+  UsersRound,
+  Video,
   Workflow,
 } from "lucide-react";
 
-const tracks = [
-  {
-    icon: Building2,
-    title: "Corporate training",
-    subtitle: "For teams and hiring managers",
-    tone: "bg-brand-soft text-brand",
-    price: "Custom quote per cohort",
-    primary: true,
-    cta: "Talk to us",
-    ctaTo: "/contact",
-    points: [
-      "Skill assessment for the whole team before the programme starts",
-      "Curriculum built from your stack: .NET, JavaScript, cloud, DevOps",
-      "Live trainer sessions plus recorded walkthroughs",
-      "Mock interview panels and a manager progress dashboard",
-    ],
-  },
-  {
-    icon: UserRound,
-    title: "Individual",
-    subtitle: "For developers preparing on their own",
-    tone: "bg-ai-accent-soft text-ai-accent",
-    price: "Free to start, upgrade any time",
-    primary: false,
-    cta: "Start practicing",
-    ctaTo: "/",
-    points: [
-      "Full question library with explanations, videos, and examples",
-      "Pick a topic path and practise at your own pace",
-      "Daily practice sets and bookmarked answers",
-      "Interview-day checklists for each technology",
-    ],
-  },
-] as const;
-
 const workflow = [
-  { title: "Tell us your goal", description: "Choose corporate training or individual practice." },
-  { title: "Skill check", description: "A short assessment shows your current level." },
-  { title: "Your plan", description: "We map topics and a weekly schedule." },
-  { title: "Learn and practise", description: "Explanations, videos, and hands-on examples." },
-  { title: "Mock interviews", description: "Feedback rounds until you are interview ready." },
+  { icon: CalendarCheck, title: "Schedule", description: "Set the role, panel, time, and structured question set." },
+  { icon: UsersRound, title: "Invite", description: "Send one secure interview link to everyone involved." },
+  { icon: Video, title: "Interview", description: "Meet on video and move through prepared questions." },
+  { icon: TestTube2, title: "Test code", description: "Run the candidate solution against automated unit tests." },
+  { icon: FileBarChart, title: "Decide", description: "Compare scorecards and share a candidate report." },
 ];
 
 import { Button } from "@/components/ui/button";
@@ -189,35 +157,31 @@ function Index() {
               <span className="size-2 rounded-full bg-ai-accent" /> 12,000+ questions across 50+ topics
             </span>
             <h1 className="mt-5 font-display text-5xl font-bold leading-[1.05] tracking-normal sm:text-6xl">
-              Ace your next <span className="text-ai-gradient">developer interview</span>
+              Run better <span className="text-ai-gradient">technical interviews</span>
             </h1>
             <p className="mt-5 max-w-md text-lg text-soft-ink">
-              Every .NET, JavaScript, database, cloud, AI, and integration question paired with a clear explanation, video walkthrough, and runnable example.
+              Schedule candidates, meet on video, ask structured technical questions, write code together, and run automated unit tests in one place.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Button asChild variant="hero" size="hero">
-                <a href="#questions">
-                  Start practicing free <ArrowRight aria-hidden="true" />
-                </a>
+                <Link to="/demo">Schedule an interview <ArrowRight aria-hidden="true" /></Link>
               </Button>
               <Button asChild variant="glass" size="hero">
-                <a href="#practice">
-                  <Play aria-hidden="true" /> Watch a sample
-                </a>
+                <Link to="/practice"><Play aria-hidden="true" /> Try code practice</Link>
               </Button>
             </div>
             <dl className="mt-8 flex flex-wrap gap-8">
               <div>
-                <dt className="font-display text-2xl font-bold">12k+</dt>
-                <dd className="text-xs text-faint-ink">Questions</dd>
+                <dt className="font-display text-2xl font-bold">One link</dt>
+                <dd className="text-xs text-faint-ink">For every participant</dd>
               </div>
               <div>
-                <dt className="font-display text-2xl font-bold">3.4k</dt>
-                <dd className="text-xs text-faint-ink">Videos</dd>
+                <dt className="font-display text-2xl font-bold">Live</dt>
+                <dd className="text-xs text-faint-ink">Video and code</dd>
               </div>
               <div>
-                <dt className="font-display text-2xl font-bold">50+</dt>
-                <dd className="text-xs text-faint-ink">Topics</dd>
+                <dt className="font-display text-2xl font-bold">Auto</dt>
+                <dd className="text-xs text-faint-ink">Unit test results</dd>
               </div>
             </dl>
           </div>
