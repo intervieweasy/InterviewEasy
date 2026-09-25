@@ -12,6 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CareersRouteImport } from './routes/careers'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as DemoRouteImport } from './routes/demo'
+import { Route as PracticeRouteImport } from './routes/practice'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as TopicsSlugRouteImport } from './routes/topics/$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -29,6 +32,21 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DemoRoute = DemoRouteImport.update({
+  id: '/demo',
+  path: '/demo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PracticeRoute = PracticeRouteImport.update({
+  id: '/practice',
+  path: '/practice',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TopicsSlugRoute = TopicsSlugRouteImport.update({
   id: '/topics/$slug',
   path: '/topics/$slug',
@@ -39,12 +57,18 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
+  '/demo': typeof DemoRoute
+  '/practice': typeof PracticeRoute
+  '/pricing': typeof PricingRoute
   '/topics/$slug': typeof TopicsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
+  '/demo': typeof DemoRoute
+  '/practice': typeof PracticeRoute
+  '/pricing': typeof PricingRoute
   '/topics/$slug': typeof TopicsSlugRoute
 }
 export interface FileRoutesById {
@@ -52,20 +76,48 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
+  '/demo': typeof DemoRoute
+  '/practice': typeof PracticeRoute
+  '/pricing': typeof PricingRoute
   '/topics/$slug': typeof TopicsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/careers' | '/contact' | '/topics/$slug'
+  fullPaths:
+    | '/'
+    | '/careers'
+    | '/contact'
+    | '/demo'
+    | '/practice'
+    | '/pricing'
+    | '/topics/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/careers' | '/contact' | '/topics/$slug'
-  id: '__root__' | '/' | '/careers' | '/contact' | '/topics/$slug'
+  to:
+    | '/'
+    | '/careers'
+    | '/contact'
+    | '/demo'
+    | '/practice'
+    | '/pricing'
+    | '/topics/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/careers'
+    | '/contact'
+    | '/demo'
+    | '/practice'
+    | '/pricing'
+    | '/topics/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CareersRoute: typeof CareersRoute
   ContactRoute: typeof ContactRoute
+  DemoRoute: typeof DemoRoute
+  PracticeRoute: typeof PracticeRoute
+  PricingRoute: typeof PricingRoute
   TopicsSlugRoute: typeof TopicsSlugRoute
 }
 
@@ -92,6 +144,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/demo': {
+      id: '/demo'
+      path: '/demo'
+      fullPath: '/demo'
+      preLoaderRoute: typeof DemoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/practice': {
+      id: '/practice'
+      path: '/practice'
+      fullPath: '/practice'
+      preLoaderRoute: typeof PracticeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/topics/$slug': {
       id: '/topics/$slug'
       path: '/topics/$slug'
@@ -106,6 +179,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CareersRoute: CareersRoute,
   ContactRoute: ContactRoute,
+  DemoRoute: DemoRoute,
+  PracticeRoute: PracticeRoute,
+  PricingRoute: PricingRoute,
   TopicsSlugRoute: TopicsSlugRoute,
 }
 export const routeTree = rootRouteImport

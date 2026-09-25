@@ -14,16 +14,16 @@ export const Route = createFileRoute("/contact")({
       {
         name: "description",
         content:
-          "Contact the Interview Easy team about corporate training, individual plans, careers, or partnership enquiries.",
+          "Contact the Interview Easy team about technical interview scheduling, product demos, pricing, support, or careers.",
       },
       {
         name: "keywords",
-        content: "contact Interview Easy, corporate developer training, interview preparation support, developer careers",
+        content: "contact Interview Easy, technical interview scheduling, coding interview platform, product demo, developer careers",
       },
       { property: "og:title", content: "Contact Interview Easy — Talk to our team" },
       {
         property: "og:description",
-        content: "Reach the Interview Easy team for corporate training, individual plans, and careers.",
+        content: "Reach the Interview Easy team for interview scheduling, product demos, support, and careers.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -41,7 +41,7 @@ const channels = [
   },
   {
     icon: MessageSquare,
-    label: "Training and sales",
+    label: "Product and sales",
     value: "hello@intervieweasy.in",
     href: "mailto:hello@intervieweasy.in",
   },
@@ -68,7 +68,7 @@ function ContactPage() {
             Let us <span className="text-ai-gradient">talk</span>
           </h1>
           <p className="mt-4 max-w-md text-lg text-soft-ink">
-            Questions about corporate training, individual preparation plans, or joining the team? Pick a channel below.
+            Questions about interview scheduling, product demos, pricing, or joining the team? Pick a channel below.
           </p>
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             {channels.map((channel) => (
@@ -114,7 +114,7 @@ function ContactPage() {
             </div>
             <label className="grid gap-2 text-sm font-medium">
               Topic
-              <Input required name="topic" placeholder="Corporate training, individual plan, careers..." />
+              <Input required name="topic" placeholder="Product demo, pricing, support, careers..." />
             </label>
             <label className="grid gap-2 text-sm font-medium">
               Message
