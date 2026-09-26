@@ -14,7 +14,6 @@ import {
   TestTube2,
   UsersRound,
   Video,
-  Workflow,
 } from "lucide-react";
 
 const workflow = [
@@ -32,25 +31,25 @@ import { menuGroups } from "@/lib/topics";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Interview Easy — Developer Interview Questions, Videos, and Practice" },
+      { title: "Interview Easy — Schedule and Run Technical Interviews" },
       {
         name: "description",
         content:
-          "Prepare for .NET, JavaScript, database, Azure, AI, and integration interviews with searchable questions, explanations, videos, examples, and practice prompts.",
+          "Schedule and manage technical interviews with live video, structured questions, a collaborative code editor, automated unit tests, and candidate reports.",
       },
       {
         name: "keywords",
         content:
-          "developer interview questions, .NET interview questions, JavaScript interview questions, Azure interview questions, coding practice, interview videos",
+          "technical interview platform, interview scheduling, live coding interview, automated unit tests, interview questions, candidate scorecards",
       },
       {
         property: "og:title",
-        content: "Interview Easy — Developer Interview Questions, Videos, and Practice",
+        content: "Interview Easy — Schedule and Run Technical Interviews",
       },
       {
         property: "og:description",
         content:
-          "Search .NET, JavaScript, database, Azure, AI, and integration interview topics, then learn each answer with text, video, and examples.",
+          "Schedule candidates, meet on video, assess code with automated tests, and make structured hiring decisions.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -152,7 +151,7 @@ function Index() {
         <section className="container-fluid grid items-center gap-12 pb-10 pt-14 lg:grid-cols-2">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-glass-border bg-glass px-3 py-1 text-xs font-semibold text-ai-accent shadow-sm backdrop-blur-md">
-              <span className="size-2 rounded-full bg-ai-accent" /> 12,000+ questions across 50+ topics
+              <span className="size-2 rounded-full bg-success" /> Scheduling · Video · Code · Automated tests
             </span>
             <h1 className="mt-5 font-display text-5xl font-bold leading-[1.05] tracking-normal sm:text-6xl">
               Run better <span className="text-ai-gradient">technical interviews</span>
@@ -401,9 +400,10 @@ function Index() {
       <footer className="container-fluid relative z-10 flex flex-col items-center gap-3 py-10 text-center text-sm text-soft-ink sm:flex-row sm:justify-between sm:text-left">
         <span>InterviewEasy — practice smarter, not harder. © 2026</span>
         <span className="flex flex-wrap items-center justify-center gap-4">
-          <Link to="/careers" className="font-medium transition-colors hover:text-brand">
-            Careers
-          </Link>
+          <Link to="/practice" className="font-medium transition-colors hover:text-brand">Practice</Link>
+          <Link to="/pricing" className="font-medium transition-colors hover:text-brand">Pricing</Link>
+          <Link to="/demo" className="font-medium transition-colors hover:text-brand">Demo</Link>
+          <Link to="/careers" className="font-medium transition-colors hover:text-brand">Careers</Link>
           <Link to="/contact" className="font-medium transition-colors hover:text-brand">
             Contact
           </Link>
