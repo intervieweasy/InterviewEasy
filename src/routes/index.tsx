@@ -58,32 +58,13 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const topics = [
-  {
-    icon: "#",
-    title: ".NET Stack",
-    description: "C#, ASP.NET, Core, APIs and desktop apps",
-    count: "14 topic areas",
-  },
-  {
-    icon: "JS",
-    title: "JavaScript Stack",
-    description: "JavaScript, Angular, React, TypeScript and Node.js",
-    count: "9 topic areas",
-  },
-  {
-    icon: "DB",
-    title: "Databases",
-    description: "SQL Server, MongoDB, RavenDB and PostgreSQL",
-    count: "6 topic areas",
-  },
-  {
-    icon: "AI",
-    title: "AI & Integrations",
-    description: "AI, payments, SAP, Salesforce and messaging",
-    count: "12 topic areas",
-  },
-];
+const topics = menuGroups.map(({ title, description, Icon, tone, topics: groupTopics }) => ({
+  Icon,
+  tone,
+  title,
+  description,
+  count: `${groupTopics.length} topic areas`,
+}));
 
 const steps = [
   {
@@ -256,8 +237,8 @@ function Index() {
                 key={topic.title}
                 className="rounded-2xl border border-glass-border bg-glass p-5 backdrop-blur-xl transition-colors hover:bg-glass-strong"
               >
-                <div className="flex size-11 items-center justify-center rounded-xl bg-brand-soft font-display text-sm font-bold text-brand" aria-hidden="true">
-                  {topic.icon}
+                <div className={`flex size-11 items-center justify-center rounded-xl ${topic.tone}`} aria-hidden="true">
+                  <topic.Icon />
                 </div>
                 <h3 className="mt-3 font-display font-semibold">{topic.title}</h3>
                 <p className="mt-1 text-sm text-soft-ink">{topic.description}</p>
