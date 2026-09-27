@@ -4,12 +4,16 @@ import {
   ArrowRight,
   ArrowUpRight,
   BookOpen,
+  BrainCircuit,
   CalendarCheck,
+  CheckCircle2,
   ChevronLeft,
   ChevronRight,
   Code2,
   FileBarChart,
+  MonitorUp,
   Play,
+  Radio,
   Search,
   TestTube2,
   UsersRound,
@@ -108,9 +112,129 @@ const featuredVideos = [
   },
 ] as const;
 
+const features = [
+  {
+    icon: BrainCircuit,
+    label: "AI-assisted interviews",
+    title: "Keep every interview focused.",
+    description: "Bring relevant technical questions and consistent evaluation prompts into the conversation, so your team can spend more time getting to know the candidate.",
+    detail: "Structured questions",
+    scene: "ai",
+  },
+  {
+    icon: CalendarCheck,
+    label: "Easy scheduling",
+    title: "From availability to interview in fewer steps.",
+    description: "Coordinate candidates, interviewers, and question sets in one place. Give everyone a clear plan before the call begins.",
+    detail: "One shared interview plan",
+    scene: "schedule",
+  },
+  {
+    icon: MonitorUp,
+    label: "Screen sharing",
+    title: "See the thinking, not just the answer.",
+    description: "Walk through architecture, debug a problem together, and discuss real work with a shared screen alongside the conversation.",
+    detail: "Collaborative review",
+    scene: "share",
+  },
+  {
+    icon: Radio,
+    label: "Video recording",
+    title: "Make room to review the details.",
+    description: "Keep the interview conversation and its key moments together for a more thoughtful panel review after the session.",
+    detail: "Reviewable sessions",
+    scene: "record",
+  },
+  {
+    icon: TestTube2,
+    label: "Automated test cases",
+    title: "Let working code show the way.",
+    description: "Pair coding questions with test cases and make the results part of the discussion instead of relying on guesswork.",
+    detail: "Clear test results",
+    scene: "tests",
+  },
+  {
+    icon: FileBarChart,
+    label: "Decision-ready feedback",
+    title: "Leave with a clearer decision.",
+    description: "Bring interview notes, coding results, and panel feedback together for a more consistent candidate review.",
+    detail: "Panel scorecards",
+    scene: "feedback",
+  },
+] as const;
+
+function FeatureScene({ scene }: { scene: (typeof features)[number]["scene"] }) {
+  return (
+    <div className="flex min-h-72 flex-col overflow-hidden rounded-md border border-glass-border bg-glass-strong shadow-ai-soft sm:min-h-80">
+      <div className="flex h-11 items-center justify-between border-b border-glass-border px-4 text-xs font-semibold text-soft-ink">
+        <span className="flex items-center gap-2"><span className="size-2 rounded-full bg-success" /> Interview Easy / Workspace</span>
+        <span className="hidden sm:inline">Senior Software Engineer</span>
+      </div>
+      <div className="grid flex-1 grid-cols-[3.25rem_1fr] sm:grid-cols-[4rem_1fr]">
+        <div className="flex flex-col items-center gap-5 border-r border-glass-border py-5 text-faint-ink">
+          <CalendarCheck className="size-4 text-brand" aria-hidden="true" />
+          <Video className="size-4" aria-hidden="true" />
+          <Code2 className="size-4" aria-hidden="true" />
+          <FileBarChart className="size-4" aria-hidden="true" />
+        </div>
+        <div className="min-w-0 p-4 sm:p-6">
+          {scene === "ai" && <>
+            <p className="text-xs font-semibold text-ai-accent">QUESTION SET / BACKEND</p>
+            <h3 className="mt-2 font-display text-xl font-semibold">Explore how they solve problems</h3>
+            <div className="mt-5 border-l-2 border-brand bg-brand-soft p-4 text-sm font-medium text-ink">How would you design an API that handles sudden traffic spikes?</div>
+            <div className="mt-4 grid gap-2 text-xs text-soft-ink sm:grid-cols-2"><span className="border-b border-glass-border py-2">01 · Clarify requirements</span><span className="border-b border-glass-border py-2">02 · Explain trade-offs</span><span className="border-b border-glass-border py-2">03 · Consider failure modes</span><span className="border-b border-glass-border py-2">04 · Discuss scaling</span></div>
+          </>}
+          {scene === "schedule" && <>
+            <p className="text-xs font-semibold text-ai-accent">UPCOMING INTERVIEW</p>
+            <h3 className="mt-2 font-display text-xl font-semibold">Backend Engineer · Technical round</h3>
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+              <div className="rounded-md border border-glass-border bg-glass p-4"><p className="text-xs text-soft-ink">DATE & TIME</p><p className="mt-2 font-semibold">Tuesday, 10:30 AM</p></div>
+              <div className="rounded-md border border-glass-border bg-glass p-4"><p className="text-xs text-soft-ink">INTERVIEW PANEL</p><p className="mt-2 font-semibold">2 interviewers</p></div>
+            </div>
+            <div className="mt-4 flex items-center gap-2 text-sm text-success"><CheckCircle2 className="size-4" aria-hidden="true" /> Interview plan ready to share</div>
+          </>}
+          {scene === "share" && <>
+            <p className="text-xs font-semibold text-ai-accent">SCREEN SHARE / SYSTEM DESIGN</p>
+            <div className="mt-4 border border-glass-border bg-ink p-4 font-mono text-xs leading-6 text-brand-foreground sm:p-5">
+              <p className="text-faint-ink">architecture-notes.md</p>
+              <p className="mt-3">Client → API Gateway → Services</p>
+              <p>                         ↓</p>
+              <p>                    Queue → Workers</p>
+              <p>                         ↓</p>
+              <p>                       Storage</p>
+            </div>
+            <p className="mt-3 flex items-center gap-2 text-sm text-soft-ink"><MonitorUp className="size-4 text-brand" aria-hidden="true" /> Shared view for the whole panel</p>
+          </>}
+          {scene === "record" && <>
+            <div className="flex items-center justify-between gap-3"><p className="text-xs font-semibold text-ai-accent">INTERVIEW SESSION</p><span className="flex items-center gap-1.5 text-xs font-semibold text-ai-accent"><span className="size-2 rounded-full bg-ai-accent" /> REC</span></div>
+            <div className="mt-4 grid grid-cols-2 gap-2 sm:gap-3">
+              <div className="flex aspect-[1.35] items-end rounded-md bg-ink p-3 text-xs font-medium text-brand-foreground">Interviewer</div>
+              <div className="flex aspect-[1.35] items-end rounded-md bg-soft-ink p-3 text-xs font-medium text-brand-foreground">Candidate</div>
+            </div>
+            <p className="mt-4 text-sm text-soft-ink">Discussion · Technical assessment · Panel review</p>
+          </>}
+          {scene === "tests" && <>
+            <div className="flex items-center justify-between gap-2"><p className="text-xs font-semibold text-ai-accent">SOLUTION.JS</p><span className="text-xs font-semibold text-success">3 / 3 PASSED</span></div>
+            <div className="mt-4 bg-ink p-4 font-mono text-xs leading-6 text-brand-foreground"><p>function twoSum(nums, target) {'{'}</p><p className="pl-4">const seen = new Map();</p><p className="pl-4">// find the matching pair</p><p>{'}'}</p></div>
+            <div className="mt-3 space-y-2 text-xs text-soft-ink">{["Base case", "Duplicate values", "No matching pair"].map((test) => <p key={test} className="flex items-center gap-2"><CheckCircle2 className="size-4 text-success" aria-hidden="true" /> {test}</p>)}</div>
+          </>}
+          {scene === "feedback" && <>
+            <p className="text-xs font-semibold text-ai-accent">CANDIDATE SCORECARD</p>
+            <h3 className="mt-2 font-display text-xl font-semibold">Technical interview summary</h3>
+            <div className="mt-5 space-y-4">{[["Problem solving", "Strong"], ["Code quality", "Strong"], ["Communication", "Good"]].map(([name, rating]) => <div key={name} className="flex items-center justify-between gap-3 border-b border-glass-border pb-3 text-sm"><span>{name}</span><span className="font-semibold text-brand">{rating}</span></div>)}</div>
+            <p className="mt-4 text-xs text-soft-ink">Panel notes and test results in one review.</p>
+          </>}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Index() {
   const [activeVideo, setActiveVideo] = useState(0);
+  const [activeFeature, setActiveFeature] = useState(0);
   const video = featuredVideos[activeVideo] ?? featuredVideos[0];
+  const feature = features[activeFeature] ?? features[0];
 
   const showPreviousVideo = () => {
     setActiveVideo((current) => (current - 1 + featuredVideos.length) % featuredVideos.length);
@@ -222,6 +346,34 @@ function Index() {
               ))}
             </div>
           </article>
+        </section>
+
+        <section aria-label="Interview platform highlights" className="container-fluid border-y border-glass-border py-10 sm:py-14">
+          <div className="mb-7 flex flex-wrap items-end justify-between gap-5">
+            <div>
+              <p className="text-sm font-semibold text-ai-accent">The interview, end to end</p>
+              <h2 className="mt-2 max-w-2xl font-display text-3xl font-bold sm:text-4xl">Everything around a better interview.</h2>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="mr-2 font-mono text-sm text-soft-ink">{String(activeFeature + 1).padStart(2, "0")} / {String(features.length).padStart(2, "0")}</span>
+              <Button type="button" variant="glass" size="icon" aria-label="Previous feature" title="Previous feature" onClick={() => setActiveFeature((current) => (current - 1 + features.length) % features.length)}><ChevronLeft aria-hidden="true" /></Button>
+              <Button type="button" variant="hero" size="icon" aria-label="Next feature" title="Next feature" onClick={() => setActiveFeature((current) => (current + 1) % features.length)}><ChevronRight aria-hidden="true" /></Button>
+            </div>
+          </div>
+          <div className="grid items-center gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-12" aria-live="polite">
+            <div className="max-w-xl">
+              <div className="flex size-12 items-center justify-center rounded-md bg-brand-soft text-brand"><feature.icon aria-hidden="true" /></div>
+              <p className="mt-5 text-sm font-semibold text-ai-accent">{feature.label}</p>
+              <h3 className="mt-2 font-display text-3xl font-bold leading-tight sm:text-4xl">{feature.title}</h3>
+              <p className="mt-4 text-base leading-7 text-soft-ink">{feature.description}</p>
+              <p className="mt-5 flex items-center gap-2 text-sm font-semibold text-ink"><CheckCircle2 className="size-4 text-success" aria-hidden="true" /> {feature.detail}</p>
+              <Button asChild variant="glass" className="mt-7"><Link to="/demo">Explore the demo <ArrowRight aria-hidden="true" /></Link></Button>
+            </div>
+            <FeatureScene scene={feature.scene} />
+          </div>
+          <div className="mt-8 grid grid-cols-3 gap-2 sm:grid-cols-6" aria-label="Choose a feature">
+            {features.map((item, index) => <Button key={item.label} type="button" variant="ghost" aria-label={`Show ${item.label}`} aria-current={index === activeFeature ? "true" : undefined} onClick={() => setActiveFeature(index)} className={`h-auto min-w-0 flex-col gap-2 rounded-md border px-2 py-3 text-center text-[11px] leading-tight whitespace-normal sm:text-xs ${index === activeFeature ? "border-brand bg-brand-soft text-brand" : "border-glass-border bg-glass text-soft-ink hover:bg-glass-strong hover:text-ink"}`}><item.icon className="size-4" aria-hidden="true" /><span>{item.label}</span></Button>)}
+          </div>
         </section>
 
         <section id="questions" className="container-fluid py-8">
