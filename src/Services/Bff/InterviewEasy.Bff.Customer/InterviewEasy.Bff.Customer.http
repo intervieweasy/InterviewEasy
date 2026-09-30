@@ -1,0 +1,6 @@
+@InterviewEasy.Bff.Customer_HostAddress = http://localhost:5200
+
+GET {{InterviewEasy.Bff.Customer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

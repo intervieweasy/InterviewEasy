@@ -1,0 +1,6 @@
+@InterviewEasy.Bff.Candidate_HostAddress = http://localhost:5016
+
+GET {{InterviewEasy.Bff.Candidate_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

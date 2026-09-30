@@ -1,0 +1,6 @@
+@InterviewEasy.Analytics.API_HostAddress = http://localhost:5050
+
+GET {{InterviewEasy.Analytics.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

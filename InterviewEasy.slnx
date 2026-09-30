@@ -1,0 +1,111 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/BuildingBlocks/">
+    <Project Path="src/BuildingBlocks/InterviewEasy.BuildingBlocks.Common/InterviewEasy.BuildingBlocks.Common.csproj" />
+    <Project Path="src/BuildingBlocks/InterviewEasy.BuildingBlocks.Core/InterviewEasy.BuildingBlocks.Core.csproj" />
+    <Project Path="src/BuildingBlocks/InterviewEasy.BuildingBlocks.EventBus/InterviewEasy.BuildingBlocks.EventBus.csproj" />
+    <Project Path="src/BuildingBlocks/InterviewEasy.BuildingBlocks.Observability/InterviewEasy.BuildingBlocks.Observability.csproj" />
+  </Folder>
+  <Folder Name="/src/Gateways/">
+    <Project Path="src/Gateways/InterviewEasy.Gateway/InterviewEasy.Gateway.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/" />
+  <Folder Name="/src/Services/Analytics/">
+    <Project Path="src/Services/Analytics/InterviewEasy.Analytics.API/InterviewEasy.Analytics.API.csproj" />
+    <Project Path="src/Services/Analytics/InterviewEasy.Analytics.Application/InterviewEasy.Analytics.Application.csproj" />
+    <Project Path="src/Services/Analytics/InterviewEasy.Analytics.Domain/InterviewEasy.Analytics.Domain.csproj" />
+    <Project Path="src/Services/Analytics/InterviewEasy.Analytics.Infrastructure/InterviewEasy.Analytics.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Bff/">
+    <Project Path="src/Services/Bff/InterviewEasy.Bff.Admin/InterviewEasy.Bff.Admin.csproj" />
+    <Project Path="src/Services/Bff/InterviewEasy.Bff.Candidate/InterviewEasy.Bff.Candidate.csproj" />
+    <Project Path="src/Services/Bff/InterviewEasy.Bff.Customer/InterviewEasy.Bff.Customer.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Feedback/">
+    <Project Path="src/Services/Feedback/InterviewEasy.Feedback.API/InterviewEasy.Feedback.API.csproj" />
+    <Project Path="src/Services/Feedback/InterviewEasy.Feedback.Application/InterviewEasy.Feedback.Application.csproj" />
+    <Project Path="src/Services/Feedback/InterviewEasy.Feedback.Domain/InterviewEasy.Feedback.Domain.csproj" />
+    <Project Path="src/Services/Feedback/InterviewEasy.Feedback.Infrastructure/InterviewEasy.Feedback.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Identity/">
+    <Project Path="src/Services/Identity/InterviewEasy.Identity.API/InterviewEasy.Identity.API.csproj" />
+    <Project Path="src/Services/Identity/InterviewEasy.Identity.Application/InterviewEasy.Identity.Application.csproj" />
+    <Project Path="src/Services/Identity/InterviewEasy.Identity.Domain/InterviewEasy.Identity.Domain.csproj" />
+    <Project Path="src/Services/Identity/InterviewEasy.Identity.Infrastructure/InterviewEasy.Identity.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Notification/">
+    <Project Path="src/Services/Notification/InterviewEasy.Notification.API/InterviewEasy.Notification.API.csproj" />
+    <Project Path="src/Services/Notification/InterviewEasy.Notification.Application/InterviewEasy.Notification.Application.csproj" />
+    <Project Path="src/Services/Notification/InterviewEasy.Notification.Domain/InterviewEasy.Notification.Domain.csproj" />
+    <Project Path="src/Services/Notification/InterviewEasy.Notification.Infrastructure/InterviewEasy.Notification.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Proctoring/">
+    <Project Path="src/Services/Proctoring/InterviewEasy.Proctoring.API/InterviewEasy.Proctoring.API.csproj" />
+    <Project Path="src/Services/Proctoring/InterviewEasy.Proctoring.Application/InterviewEasy.Proctoring.Application.csproj" />
+    <Project Path="src/Services/Proctoring/InterviewEasy.Proctoring.Domain/InterviewEasy.Proctoring.Domain.csproj" />
+    <Project Path="src/Services/Proctoring/InterviewEasy.Proctoring.Infrastructure/InterviewEasy.Proctoring.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Question/">
+    <Project Path="src/Services/Question/InterviewEasy.Question.API/InterviewEasy.Question.API.csproj" />
+    <Project Path="src/Services/Question/InterviewEasy.Question.Application/InterviewEasy.Question.Application.csproj" />
+    <Project Path="src/Services/Question/InterviewEasy.Question.Domain/InterviewEasy.Question.Domain.csproj" />
+    <Project Path="src/Services/Question/InterviewEasy.Question.Infrastructure/InterviewEasy.Question.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Recording/">
+    <Project Path="src/Services/Recording/InterviewEasy.Recording.API/InterviewEasy.Recording.API.csproj" />
+    <Project Path="src/Services/Recording/InterviewEasy.Recording.Application/InterviewEasy.Recording.Application.csproj" />
+    <Project Path="src/Services/Recording/InterviewEasy.Recording.Domain/InterviewEasy.Recording.Domain.csproj" />
+    <Project Path="src/Services/Recording/InterviewEasy.Recording.Infrastructure/InterviewEasy.Recording.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Requirement/">
+    <Project Path="src/Services/Requirement/InterviewEasy.Requirement.API/InterviewEasy.Requirement.API.csproj" />
+    <Project Path="src/Services/Requirement/InterviewEasy.Requirement.Application/InterviewEasy.Requirement.Application.csproj" />
+    <Project Path="src/Services/Requirement/InterviewEasy.Requirement.Domain/InterviewEasy.Requirement.Domain.csproj" />
+    <Project Path="src/Services/Requirement/InterviewEasy.Requirement.Infrastructure/InterviewEasy.Requirement.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Sandbox/">
+    <Project Path="src/Services/Sandbox/InterviewEasy.Sandbox.API/InterviewEasy.Sandbox.API.csproj" />
+    <Project Path="src/Services/Sandbox/InterviewEasy.Sandbox.Application/InterviewEasy.Sandbox.Application.csproj" />
+    <Project Path="src/Services/Sandbox/InterviewEasy.Sandbox.Domain/InterviewEasy.Sandbox.Domain.csproj" />
+    <Project Path="src/Services/Sandbox/InterviewEasy.Sandbox.Infrastructure/InterviewEasy.Sandbox.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Scheduling/">
+    <Project Path="src/Services/Scheduling/InterviewEasy.Scheduling.API/InterviewEasy.Scheduling.API.csproj" />
+    <Project Path="src/Services/Scheduling/InterviewEasy.Scheduling.Application/InterviewEasy.Scheduling.Application.csproj" />
+    <Project Path="src/Services/Scheduling/InterviewEasy.Scheduling.Domain/InterviewEasy.Scheduling.Domain.csproj" />
+    <Project Path="src/Services/Scheduling/InterviewEasy.Scheduling.Infrastructure/InterviewEasy.Scheduling.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Session/">
+    <Project Path="src/Services/Session/InterviewEasy.Session.API/InterviewEasy.Session.API.csproj" />
+    <Project Path="src/Services/Session/InterviewEasy.Session.Application/InterviewEasy.Session.Application.csproj" />
+    <Project Path="src/Services/Session/InterviewEasy.Session.Domain/InterviewEasy.Session.Domain.csproj" />
+    <Project Path="src/Services/Session/InterviewEasy.Session.Infrastructure/InterviewEasy.Session.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/" />
+  <Folder Name="/tests/IntegrationTests/">
+    <Project Path="tests/IntegrationTests/InterviewEasy.Analytics.IntegrationTests/InterviewEasy.Analytics.IntegrationTests.csproj" />
+    <Project Path="tests/IntegrationTests/InterviewEasy.Feedback.IntegrationTests/InterviewEasy.Feedback.IntegrationTests.csproj" />
+    <Project Path="tests/IntegrationTests/InterviewEasy.Identity.IntegrationTests/InterviewEasy.Identity.IntegrationTests.csproj" />
+    <Project Path="tests/IntegrationTests/InterviewEasy.Notification.IntegrationTests/InterviewEasy.Notification.IntegrationTests.csproj" />
+    <Project Path="tests/IntegrationTests/InterviewEasy.Proctoring.IntegrationTests/InterviewEasy.Proctoring.IntegrationTests.csproj" />
+    <Project Path="tests/IntegrationTests/InterviewEasy.Question.IntegrationTests/InterviewEasy.Question.IntegrationTests.csproj" />
+    <Project Path="tests/IntegrationTests/InterviewEasy.Recording.IntegrationTests/InterviewEasy.Recording.IntegrationTests.csproj" />
+    <Project Path="tests/IntegrationTests/InterviewEasy.Requirement.IntegrationTests/InterviewEasy.Requirement.IntegrationTests.csproj" />
+    <Project Path="tests/IntegrationTests/InterviewEasy.Sandbox.IntegrationTests/InterviewEasy.Sandbox.IntegrationTests.csproj" />
+    <Project Path="tests/IntegrationTests/InterviewEasy.Scheduling.IntegrationTests/InterviewEasy.Scheduling.IntegrationTests.csproj" />
+    <Project Path="tests/IntegrationTests/InterviewEasy.Session.IntegrationTests/InterviewEasy.Session.IntegrationTests.csproj" />
+  </Folder>
+  <Folder Name="/tests/UnitTests/">
+    <Project Path="tests/UnitTests/InterviewEasy.Analytics.UnitTests/InterviewEasy.Analytics.UnitTests.csproj" />
+    <Project Path="tests/UnitTests/InterviewEasy.Feedback.UnitTests/InterviewEasy.Feedback.UnitTests.csproj" />
+    <Project Path="tests/UnitTests/InterviewEasy.Identity.UnitTests/InterviewEasy.Identity.UnitTests.csproj" />
+    <Project Path="tests/UnitTests/InterviewEasy.Notification.UnitTests/InterviewEasy.Notification.UnitTests.csproj" />
+    <Project Path="tests/UnitTests/InterviewEasy.Proctoring.UnitTests/InterviewEasy.Proctoring.UnitTests.csproj" />
+    <Project Path="tests/UnitTests/InterviewEasy.Question.UnitTests/InterviewEasy.Question.UnitTests.csproj" />
+    <Project Path="tests/UnitTests/InterviewEasy.Recording.UnitTests/InterviewEasy.Recording.UnitTests.csproj" />
+    <Project Path="tests/UnitTests/InterviewEasy.Requirement.UnitTests/InterviewEasy.Requirement.UnitTests.csproj" />
+    <Project Path="tests/UnitTests/InterviewEasy.Sandbox.UnitTests/InterviewEasy.Sandbox.UnitTests.csproj" />
+    <Project Path="tests/UnitTests/InterviewEasy.Scheduling.UnitTests/InterviewEasy.Scheduling.UnitTests.csproj" />
+    <Project Path="tests/UnitTests/InterviewEasy.Session.UnitTests/InterviewEasy.Session.UnitTests.csproj" />
+  </Folder>
+</Solution>
