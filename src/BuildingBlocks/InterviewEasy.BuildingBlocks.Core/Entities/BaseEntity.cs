@@ -1,0 +1,26 @@
+﻿namespace InterviewEasy.BuildingBlocks.Core.Entities;
+
+/// <summary>
+/// Base class for all entities in the domain.
+/// Provides identity and equality semantics.
+/// </summary>
+public abstract class BaseEntity
+{
+    public Guid Id { get; protected set; } = Guid.NewGuid();
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is not BaseEntity other) return false;
+        if (ReferenceEquals(this, other)) return true;
+        if (GetType() != other.GetType()) return false;
+        return Id == other.Id;
+    }
+
+    public override int GetHashCode() => Id.GetHashCode();
+
+    public static bool operator ==(BaseEntity? left, BaseEntity? right)
+        => Equals(left, right);
+
+    public static bool operator !=(BaseEntity? left, BaseEntity? right)
+        => !Equals(left, right);
+}
