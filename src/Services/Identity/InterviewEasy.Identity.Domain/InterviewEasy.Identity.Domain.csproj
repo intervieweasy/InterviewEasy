@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\InterviewEasy.BuildingBlocks.Core\InterviewEasy.BuildingBlocks.Core.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\InterviewEasy.BuildingBlocks.EventBus\InterviewEasy.BuildingBlocks.EventBus.csproj" />
+  </ItemGroup>
+
 </Project>
