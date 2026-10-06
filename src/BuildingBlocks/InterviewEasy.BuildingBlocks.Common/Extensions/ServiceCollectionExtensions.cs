@@ -1,5 +1,4 @@
 ﻿using InterviewEasy.BuildingBlocks.Common.Auth;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InterviewEasy.BuildingBlocks.Common.Extensions;

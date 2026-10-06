@@ -14,24 +14,34 @@ public sealed class CurrentUser : ICurrentUser
 
     private ClaimsPrincipal? Principal => _accessor.HttpContext?.User;
 
-    public Guid? UserId
+    private string? GetClaim(params string[] types)
     {
-        get
+        var principal = Principal;
+        if (principal is null) return null;
+
+        foreach (var type in types)
         {
-            var raw = Principal?.FindFirstValue(ClaimTypes.NameIdentifier)
-                   ?? Principal?.FindFirstValue("sub");
-            return Guid.TryParse(raw, out var id) ? id : null;
+            var value = principal.FindFirst(type)?.Value;
+            if (!string.IsNullOrWhiteSpace(value)) return value;
         }
+
+        return null;
     }
 
-    public string? Email => Principal?.FindFirstValue(ClaimTypes.Email)
-                         ?? Principal?.FindFirstValue("email");
+    public Guid? UserId =>
+        Guid.TryParse(GetClaim(ClaimTypes.NameIdentifier, "sub"), out var id)
+            ? (Guid?)id
+            : null;
 
-    public string? FullName => Principal?.FindFirstValue("name");
+    public string? Email => GetClaim(ClaimTypes.Email, "email");
+
+    public string? FullName => GetClaim("name", ClaimTypes.Name);
 
     public IReadOnlyList<string> Roles =>
-        Principal?.FindAll(ClaimTypes.Role)
+        Principal?.Claims
+            .Where(c => c.Type == ClaimTypes.Role || c.Type == "role")
             .Select(c => c.Value)
+            .Distinct()
             .ToList()
         ?? new List<string>();
 
