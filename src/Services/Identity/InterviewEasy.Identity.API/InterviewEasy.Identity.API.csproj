@@ -8,6 +8,17 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    <PackageReference Include="Swashbuckle.AspNetCore" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InterviewEasy.Identity.Infrastructure\InterviewEasy.Identity.Infrastructure.csproj" />
+    <ProjectReference Include="..\InterviewEasy.Identity.Application\InterviewEasy.Identity.Application.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\InterviewEasy.BuildingBlocks.Common\InterviewEasy.BuildingBlocks.Common.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\InterviewEasy.BuildingBlocks.EventBus\InterviewEasy.BuildingBlocks.EventBus.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\InterviewEasy.BuildingBlocks.Observability\InterviewEasy.BuildingBlocks.Observability.csproj" />
   </ItemGroup>
 
 </Project>
