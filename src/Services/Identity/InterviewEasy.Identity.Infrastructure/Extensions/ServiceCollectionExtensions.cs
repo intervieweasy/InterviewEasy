@@ -2,6 +2,8 @@ using InterviewEasy.Identity.Infrastructure.Persistence;
 using InterviewEasy.Identity.Infrastructure.Persistence.Interceptors;
 using InterviewEasy.Identity.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
+using InterviewEasy.Identity.Infrastructure.Repositories;
+using InterviewEasy.BuildingBlocks.Common.Abstractions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -33,6 +35,12 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped<IPasswordHasher, Argon2PasswordHasher>();
         services.AddSingleton<IJwtTokenService, JwtTokenService>();
+
+        // Repositories & Unit of Work
+        services.AddScoped<ITenantRepository, TenantRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }
