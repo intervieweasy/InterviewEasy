@@ -8,6 +8,7 @@ using InterviewEasy.Identity.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -123,7 +124,12 @@ app.UseMiddleware<TenantResolutionMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
+    app.UseSwagger(options =>
+    {
+        // Serialize the Swagger document as OpenAPI/Swagger 2.0 to maintain compatibility
+        // with the bundled Swagger UI.
+        options.SerializeAsV2 = true;
+    });
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Identity API v1");
