@@ -3,6 +3,7 @@ using InterviewEasy.BuildingBlocks.Common.Middleware;
 using InterviewEasy.BuildingBlocks.EventBus.Extensions;
 using InterviewEasy.BuildingBlocks.Observability.Extensions;
 using InterviewEasy.Identity.Infrastructure.Extensions;
+using InterviewEasy.Identity.Application.Extensions;
 using InterviewEasy.Identity.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -29,6 +30,7 @@ builder.Services.AddObservability(
 
 // --- Identity infrastructure (DbContext, hashers, JWT service) ---
 builder.Services.AddIdentityInfrastructure(configuration);
+builder.Services.AddIdentityApplication();
 
 // --- JWT authentication ---
 var jwtSection = configuration.GetSection("Jwt");
