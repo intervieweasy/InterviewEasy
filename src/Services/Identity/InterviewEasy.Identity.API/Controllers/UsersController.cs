@@ -1,10 +1,8 @@
-using InterviewEasy.Identity.Domain.Entities;
-using DomainUser = InterviewEasy.Identity.Domain.Entities.User;
-using InterviewEasy.Identity.Infrastructure.Persistence;
-using InterviewEasy.Identity.Infrastructure.Services;
+using InterviewEasy.BuildingBlocks.Common.Results;
+using InterviewEasy.Identity.Application.Users;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace InterviewEasy.Identity.API.Controllers;
 
@@ -12,78 +10,66 @@ namespace InterviewEasy.Identity.API.Controllers;
 [Route("api/v1/[controller]")]
 public sealed class UsersController : ControllerBase
 {
-    private readonly IdentityDbContext _db;
-    private readonly IPasswordHasher _hasher;
+    private readonly IUserService _service;
 
-    public UsersController(IdentityDbContext db, IPasswordHasher hasher)
+    public UsersController(IUserService service)
     {
-        _db = db;
-        _hasher = hasher;
+        _service = service;
     }
 
-    public sealed record InviteUserRequest(
-        Guid TenantId, string Email, string FullName, string InitialPassword);
-
-    public sealed record UserResponse(
-        Guid Id, Guid TenantId, string Email, string FullName,
-        string Status, bool EmailVerified, DateTime CreatedAt);
+    public sealed record InviteUserRequest(Guid TenantId, string Email, string FullName, string InitialPassword);
 
     [HttpPost("invite")]
     [AllowAnonymous]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> Invite([FromBody] InviteUserRequest request, CancellationToken ct)
     {
-        var tenant = await _db.Tenants
-            .FirstOrDefaultAsync(t => t.Id == request.TenantId, ct);
-        if (tenant is null) return NotFound(new { error = "tenant_not_found" });
+        var result = await _service.InviteAsync(
+            request.TenantId, request.Email, request.FullName,
+            request.InitialPassword, ct: ct);
 
-        var email = request.Email.Trim().ToLowerInvariant();
-        var exists = await _db.Users
-            .AnyAsync(u => u.TenantId == request.TenantId && u.Email == email, ct);
-        if (exists) return Conflict(new { error = "user_email_exists" });
+        if (result.IsFailure) return ToProblem(result.Error);
 
-        User user;
-        try
-        {
-            var hash = _hasher.Hash(request.InitialPassword);
-            user = DomainUser.Create(request.TenantId, email, request.FullName, hash);
-        }
-        catch (ArgumentException ex)
-        {
-            return UnprocessableEntity(new { error = "validation_failed", message = ex.Message });
-        }
-
-        _db.Users.Add(user);
-        await _db.SaveChangesAsync(ct);
-
-        return CreatedAtAction(nameof(GetById), new { id = user.Id }, Map(user));
+        return CreatedAtAction(
+            nameof(GetById), new { id = result.Value.Id }, result.Value);
     }
 
     [HttpGet("{id:guid}")]
     [AllowAnonymous]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid id, CancellationToken ct)
     {
-        var user = await _db.Users.FirstOrDefaultAsync(u => u.Id == id, ct);
-        if (user is null) return NotFound();
-        return Ok(Map(user));
+        var result = await _service.GetByIdAsync(id, ct);
+        return result.IsSuccess ? Ok(result.Value) : ToProblem(result.Error);
     }
 
     [HttpGet]
     [AllowAnonymous]
-    public async Task<IActionResult> ListByTenant(
-        [FromQuery] Guid tenantId,
-        CancellationToken ct)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> ListByTenant([FromQuery] Guid tenantId, CancellationToken ct)
     {
-        var users = await _db.Users
-            .Where(u => u.TenantId == tenantId)
-            .OrderByDescending(u => u.CreatedAt)
-            .Take(200)
-            .ToListAsync(ct);
-
-        return Ok(users.Select(Map));
+        var result = await _service.ListByTenantAsync(tenantId, ct);
+        return result.IsSuccess ? Ok(result.Value) : ToProblem(result.Error);
     }
 
-    private static UserResponse Map(DomainUser u) => new(
-        u.Id, u.TenantId, u.Email, u.FullName,
-        u.Status.ToString().ToLowerInvariant(),
-        u.EmailVerified, u.CreatedAt);
+    private IActionResult ToProblem(Error error) => error.Type switch
+    {
+        ErrorType.Validation => UnprocessableEntity(Problem(error, 422)),
+        ErrorType.NotFound => NotFound(Problem(error, 404)),
+        ErrorType.Conflict => Conflict(Problem(error, 409)),
+        ErrorType.Unauthorized => Unauthorized(Problem(error, 401)),
+        ErrorType.Forbidden => StatusCode(403, Problem(error, 403)),
+        _ => StatusCode(500, Problem(error, 500))
+    };
+
+    private static object Problem(Error error, int status) => new
+    {
+        type = $"https://api.intervieweasy.com/errors/{error.Code}",
+        title = error.Code,
+        status,
+        detail = error.Message
+    };
 }
