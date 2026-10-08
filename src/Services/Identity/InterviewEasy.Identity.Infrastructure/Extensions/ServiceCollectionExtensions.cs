@@ -33,7 +33,9 @@ public static class ServiceCollectionExtensions
         services.Configure<JwtOptions>(
             configuration.GetSection(JwtOptions.SectionName));
 
-        services.AddScoped<IPasswordHasher, Argon2PasswordHasher>();
+        // Use singleton so Argon2PasswordHasher shares its internal SemaphoreSlim
+        // across all requests to throttle CPU-intensive hashing.
+        services.AddSingleton<IPasswordHasher, Argon2PasswordHasher>();
         services.AddSingleton<IJwtTokenService, JwtTokenService>();
 
         // Repositories & Unit of Work

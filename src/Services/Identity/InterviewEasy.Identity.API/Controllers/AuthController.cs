@@ -3,6 +3,7 @@ using InterviewEasy.Identity.Application.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace InterviewEasy.Identity.API.Controllers;
 
@@ -11,10 +12,12 @@ namespace InterviewEasy.Identity.API.Controllers;
 public sealed class AuthController : ControllerBase
 {
     private readonly IAuthService _service;
+    private readonly ILogger<AuthController> _logger;
 
-    public AuthController(IAuthService service)
+    public AuthController(IAuthService service, ILogger<AuthController> logger)
     {
         _service = service;
+        _logger = logger;
     }
 
     public sealed record LoginRequest(string TenantCode, string Email, string Password);
@@ -28,10 +31,19 @@ public sealed class AuthController : ControllerBase
         [FromBody] LoginRequest request,
         CancellationToken ct)
     {
-        var result = await _service.LoginAsync(
-            request.TenantCode, request.Email, request.Password, ct);
+        try
+        {
+            var result = await _service.LoginAsync(
+                request.TenantCode, request.Email, request.Password, ct);
 
-        return result.IsSuccess ? Ok(result.Value) : ToProblem(result.Error);
+            return result.IsSuccess ? Ok(result.Value) : ToProblem(result.Error);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unhandled error during login for {Email} in tenant {TenantCode}", request.Email, request.TenantCode);
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                Problem(Error.Unexpected("login_failed", "An unexpected error occurred while signing in."), 500));
+        }
     }
 
     [HttpGet("me")]
@@ -40,14 +52,23 @@ public sealed class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> Me(CancellationToken ct)
     {
-        var sub = User.FindFirst("sub")?.Value
-               ?? User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+        try
+        {
+            var sub = User.FindFirst("sub")?.Value
+                   ?? User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 
-        if (!Guid.TryParse(sub, out var userId))
-            return Unauthorized();
+            if (!Guid.TryParse(sub, out var userId))
+                return Unauthorized();
 
-        var result = await _service.GetCurrentUserAsync(userId, ct);
-        return result.IsSuccess ? Ok(result.Value) : ToProblem(result.Error);
+            var result = await _service.GetCurrentUserAsync(userId, ct);
+            return result.IsSuccess ? Ok(result.Value) : ToProblem(result.Error);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unhandled error while getting current user");
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                Problem(Error.Unexpected("current_user_failed", "An unexpected error occurred while loading the current user."), 500));
+        }
     }
 
     private IActionResult ToProblem(Error error) => error.Type switch

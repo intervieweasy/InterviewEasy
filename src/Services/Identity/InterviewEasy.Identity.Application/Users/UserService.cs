@@ -36,52 +36,80 @@ public sealed class UserService : IUserService
         string initialPassword, Guid? invitedBy = null,
         CancellationToken ct = default)
     {
-        var tenant = await _tenants.GetByIdAsync(tenantId, ct);
-        if (tenant is null)
-            return Result.Failure<UserDto>(
-                Error.NotFound("tenant_not_found",
-                    $"Tenant {tenantId} was not found."));
-
-        if (await _users.EmailExistsAsync(tenantId, email, ct))
-            return Result.Failure<UserDto>(
-                Error.Conflict("user_email_exists",
-                    $"User with email '{email}' already exists in this tenant."));
-
-        User user;
         try
         {
-            var hash = _hasher.Hash(initialPassword);
-            user = User.Create(tenantId, email, fullName, hash, invitedBy);
+            var tenant = await _tenants.GetByIdAsync(tenantId, ct);
+            if (tenant is null)
+                return Result.Failure<UserDto>(
+                    Error.NotFound("tenant_not_found",
+                        $"Tenant {tenantId} was not found."));
+
+            if (await _users.EmailExistsAsync(tenantId, email, ct))
+                return Result.Failure<UserDto>(
+                    Error.Conflict("user_email_exists",
+                        $"User with email '{email}' already exists in this tenant."));
+
+            User user;
+            try
+            {
+                var hash = _hasher.Hash(initialPassword);
+                user = User.Create(tenantId, email, fullName, hash, invitedBy);
+            }
+            catch (ArgumentException ex)
+            {
+                return Result.Failure<UserDto>(
+                    Error.Validation("validation_failed", ex.Message));
+            }
+
+            await _users.AddAsync(user, ct);
+            await _uow.SaveChangesAsync(ct);
+
+            _logger.LogInformation(
+                "User {Email} invited to tenant {TenantId}",
+                user.Email, tenantId);
+
+            return Result.Success(user.ToDto());
         }
-        catch (ArgumentException ex)
+        catch (Exception ex)
         {
+            _logger.LogError(ex, "Unexpected error inviting user {Email} to tenant {TenantId}", email, tenantId);
             return Result.Failure<UserDto>(
-                Error.Validation("validation_failed", ex.Message));
+                Error.Unexpected("user_invite_failed",
+                    "An unexpected error occurred while inviting the user."));
         }
-
-        await _users.AddAsync(user, ct);
-        await _uow.SaveChangesAsync(ct);
-
-        _logger.LogInformation(
-            "User {Email} invited to tenant {TenantId}",
-            user.Email, tenantId);
-
-        return Result.Success(user.ToDto());
     }
 
     public async Task<Result<UserDto>> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        var user = await _users.GetByIdAsync(id, ct);
-        return user is null
-            ? Result.Failure<UserDto>(
-                Error.NotFound("user_not_found", $"User {id} was not found."))
-            : Result.Success(user.ToDto());
+        try
+        {
+            var user = await _users.GetByIdAsync(id, ct);
+            return user is null
+                ? Result.Failure<UserDto>(
+                    Error.NotFound("user_not_found", $"User {id} was not found."))
+                : Result.Success(user.ToDto());
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unexpected error retrieving user {UserId}", id);
+            return Result.Failure<UserDto>(
+                Error.Unexpected("user_get_failed", "An unexpected error occurred while retrieving the user."));
+        }
     }
 
     public async Task<Result<IReadOnlyList<UserDto>>> ListByTenantAsync(
         Guid tenantId, CancellationToken ct = default)
     {
-        var users = await _users.ListByTenantAsync(tenantId, ct);
-        return Result.Success<IReadOnlyList<UserDto>>(users.ToDtos().ToList());
+        try
+        {
+            var users = await _users.ListByTenantAsync(tenantId, ct);
+            return Result.Success<IReadOnlyList<UserDto>>(users.ToDtos().ToList());
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unexpected error listing users for tenant {TenantId}", tenantId);
+            return Result.Failure<IReadOnlyList<UserDto>>(
+                Error.Unexpected("user_list_failed", "An unexpected error occurred while listing users."));
+        }
     }
 }
