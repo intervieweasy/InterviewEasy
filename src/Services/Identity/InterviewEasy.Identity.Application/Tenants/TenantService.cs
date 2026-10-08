@@ -28,136 +28,209 @@ public sealed class TenantService : ITenantService
         string code, string name, Guid? createdBy = null,
         CancellationToken ct = default)
     {
-        if (await _tenants.CodeExistsAsync(code, ct))
-            return Result.Failure<TenantDto>(
-                Error.Conflict("tenant_code_exists",
-                    $"Tenant code '{code}' is already taken."));
-
-        Tenant tenant;
         try
         {
-            tenant = Tenant.Create(code, name, createdBy);
+            if (await _tenants.CodeExistsAsync(code, ct))
+                return Result.Failure<TenantDto>(
+                    Error.Conflict("tenant_code_exists",
+                        $"Tenant code '{code}' is already taken."));
+
+            Tenant tenant;
+            try
+            {
+                tenant = Tenant.Create(code, name, createdBy);
+            }
+            catch (ArgumentException ex)
+            {
+                return Result.Failure<TenantDto>(
+                    Error.Validation("validation_failed", ex.Message));
+            }
+
+            await _tenants.AddAsync(tenant, ct);
+            await _uow.SaveChangesAsync(ct);
+
+            _logger.LogInformation(
+                "Tenant {TenantCode} created with id {TenantId}",
+                tenant.Code, tenant.Id);
+
+            return Result.Success(tenant.ToDto());
         }
-        catch (ArgumentException ex)
+        catch (Exception ex)
         {
+            _logger.LogError(ex, "Unexpected error creating tenant {TenantCode}", code);
             return Result.Failure<TenantDto>(
-                Error.Validation("validation_failed", ex.Message));
+                Error.Unexpected("tenant_create_failed",
+                    "An unexpected error occurred while creating the tenant."));
         }
-
-        await _tenants.AddAsync(tenant, ct);
-        await _uow.SaveChangesAsync(ct);
-
-        _logger.LogInformation(
-            "Tenant {TenantCode} created with id {TenantId}",
-            tenant.Code, tenant.Id);
-
-        return Result.Success(tenant.ToDto());
     }
 
     public async Task<Result<TenantDto>> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        var tenant = await _tenants.GetByIdAsync(id, ct);
-        return tenant is null
-            ? Result.Failure<TenantDto>(
-                Error.NotFound("tenant_not_found", $"Tenant {id} was not found."))
-            : Result.Success(tenant.ToDto());
+        try
+        {
+            var tenant = await _tenants.GetByIdAsync(id, ct);
+            return tenant is null
+                ? Result.Failure<TenantDto>(
+                    Error.NotFound("tenant_not_found", $"Tenant {id} was not found."))
+                : Result.Success(tenant.ToDto());
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unexpected error retrieving tenant {TenantId}", id);
+            return Result.Failure<TenantDto>(
+                Error.Unexpected("tenant_get_failed", "An unexpected error occurred while retrieving the tenant."));
+        }
     }
 
     public async Task<Result<TenantDto>> GetByCodeAsync(string code, CancellationToken ct = default)
     {
-        var tenant = await _tenants.GetByCodeAsync(code, ct);
-        return tenant is null
-            ? Result.Failure<TenantDto>(
-                Error.NotFound("tenant_not_found", $"Tenant '{code}' was not found."))
-            : Result.Success(tenant.ToDto());
+        try
+        {
+            var tenant = await _tenants.GetByCodeAsync(code, ct);
+            return tenant is null
+                ? Result.Failure<TenantDto>(
+                    Error.NotFound("tenant_not_found", $"Tenant '{code}' was not found."))
+                : Result.Success(tenant.ToDto());
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unexpected error retrieving tenant by code {TenantCode}", code);
+            return Result.Failure<TenantDto>(
+                Error.Unexpected("tenant_get_by_code_failed", "An unexpected error occurred while retrieving the tenant."));
+        }
     }
 
     public async Task<Result<IReadOnlyList<TenantDto>>> ListAsync(CancellationToken ct = default)
     {
-        var tenants = await _tenants.ListAsync(null, ct);
-        return Result.Success<IReadOnlyList<TenantDto>>(tenants.ToDtos().ToList());
+        try
+        {
+            var tenants = await _tenants.ListAsync(null, ct);
+            return Result.Success<IReadOnlyList<TenantDto>>(tenants.ToDtos().ToList());
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unexpected error listing tenants");
+            return Result.Failure<IReadOnlyList<TenantDto>>(
+                Error.Unexpected("tenant_list_failed", "An unexpected error occurred while listing tenants."));
+        }
     }
 
     public async Task<Result<TenantDto>> UpdateAsync(
         Guid id, string newName, Guid? updatedBy = null,
         CancellationToken ct = default)
     {
-        var tenant = await _tenants.GetByIdAsync(id, ct);
-        if (tenant is null)
-            return Result.Failure<TenantDto>(
-                Error.NotFound("tenant_not_found", $"Tenant {id} was not found."));
-
         try
         {
-            tenant.Rename(newName, updatedBy);
-        }
-        catch (ArgumentException ex)
-        {
-            return Result.Failure<TenantDto>(
-                Error.Validation("validation_failed", ex.Message));
-        }
+            var tenant = await _tenants.GetByIdAsync(id, ct);
+            if (tenant is null)
+                return Result.Failure<TenantDto>(
+                    Error.NotFound("tenant_not_found", $"Tenant {id} was not found."));
 
-        await _uow.SaveChangesAsync(ct);
-        return Result.Success(tenant.ToDto());
+            try
+            {
+                tenant.Rename(newName, updatedBy);
+            }
+            catch (ArgumentException ex)
+            {
+                return Result.Failure<TenantDto>(
+                    Error.Validation("validation_failed", ex.Message));
+            }
+
+            await _uow.SaveChangesAsync(ct);
+            return Result.Success(tenant.ToDto());
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unexpected error updating tenant {TenantId}", id);
+            return Result.Failure<TenantDto>(
+                Error.Unexpected("tenant_update_failed", "An unexpected error occurred while updating the tenant."));
+        }
     }
 
     public async Task<Result<TenantDto>> SuspendAsync(
         Guid id, string reason, Guid? updatedBy = null,
         CancellationToken ct = default)
     {
-        var tenant = await _tenants.GetByIdAsync(id, ct);
-        if (tenant is null)
-            return Result.Failure<TenantDto>(
-                Error.NotFound("tenant_not_found", $"Tenant {id} was not found."));
-
         try
         {
-            tenant.Suspend(reason, updatedBy);
+            var tenant = await _tenants.GetByIdAsync(id, ct);
+            if (tenant is null)
+                return Result.Failure<TenantDto>(
+                    Error.NotFound("tenant_not_found", $"Tenant {id} was not found."));
+
+            try
+            {
+                tenant.Suspend(reason, updatedBy);
+            }
+            catch (Exception ex)
+            {
+                return Result.Failure<TenantDto>(
+                    Error.Validation("invalid_state", ex.Message));
+            }
+
+            await _uow.SaveChangesAsync(ct);
+            return Result.Success(tenant.ToDto());
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Unexpected error suspending tenant {TenantId}", id);
             return Result.Failure<TenantDto>(
-                Error.Validation("invalid_state", ex.Message));
+                Error.Unexpected("tenant_suspend_failed", "An unexpected error occurred while suspending the tenant."));
         }
-
-        await _uow.SaveChangesAsync(ct);
-        return Result.Success(tenant.ToDto());
     }
 
     public async Task<Result<TenantDto>> ActivateAsync(
         Guid id, Guid? updatedBy = null,
         CancellationToken ct = default)
     {
-        var tenant = await _tenants.GetByIdAsync(id, ct);
-        if (tenant is null)
-            return Result.Failure<TenantDto>(
-                Error.NotFound("tenant_not_found", $"Tenant {id} was not found."));
-
         try
         {
-            tenant.Activate(updatedBy);
+            var tenant = await _tenants.GetByIdAsync(id, ct);
+            if (tenant is null)
+                return Result.Failure<TenantDto>(
+                    Error.NotFound("tenant_not_found", $"Tenant {id} was not found."));
+
+            try
+            {
+                tenant.Activate(updatedBy);
+            }
+            catch (Exception ex)
+            {
+                return Result.Failure<TenantDto>(
+                    Error.Validation("invalid_state", ex.Message));
+            }
+
+            await _uow.SaveChangesAsync(ct);
+            return Result.Success(tenant.ToDto());
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Unexpected error activating tenant {TenantId}", id);
             return Result.Failure<TenantDto>(
-                Error.Validation("invalid_state", ex.Message));
+                Error.Unexpected("tenant_activate_failed", "An unexpected error occurred while activating the tenant."));
         }
-
-        await _uow.SaveChangesAsync(ct);
-        return Result.Success(tenant.ToDto());
     }
 
     public async Task<Result> DeleteAsync(
         Guid id, Guid? deletedBy = null,
         CancellationToken ct = default)
     {
-        var tenant = await _tenants.GetByIdAsync(id, ct);
-        if (tenant is null)
-            return Result.Failure(
-                Error.NotFound("tenant_not_found", $"Tenant {id} was not found."));
+        try
+        {
+            var tenant = await _tenants.GetByIdAsync(id, ct);
+            if (tenant is null)
+                return Result.Failure(
+                    Error.NotFound("tenant_not_found", $"Tenant {id} was not found."));
 
-        tenant.SoftDelete(deletedBy);
-        await _uow.SaveChangesAsync(ct);
-        return Result.Success();
+            tenant.SoftDelete(deletedBy);
+            await _uow.SaveChangesAsync(ct);
+            return Result.Success();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unexpected error deleting tenant {TenantId}", id);
+            return Result.Failure(
+                Error.Unexpected("tenant_delete_failed", "An unexpected error occurred while deleting the tenant."));
+        }
     }
 }
